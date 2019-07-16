@@ -38,7 +38,7 @@ namespace Trestlebridge.Models.Facilities
         public void AddResource(List<IGrazing> animals)
         {
             // TODO: implement this...
-            throw new NotImplementedException();
+            _animals.AddRange(animals);
         }
 
         public override string ToString()

@@ -28,9 +28,17 @@ namespace Trestlebridge.Actions
             //index of list starts at 0, so the index will always be one less than the value the user selects
             int choiceIndex = choice - 1;
 
-            GrazingField grazingField = farm.GrazingFields[choiceIndex];
+            try
+            {
+                GrazingField grazingField = farm.GrazingFields[choiceIndex];
+                grazingField.AddResource(animal);
 
-            AddAnimalToField(farm, grazingField, animal);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                Console.WriteLine("Invalid Selection");
+                Console.ReadLine();
+            }
 
             /*
                 Couldn't get this to work. Can you?
@@ -39,18 +47,6 @@ namespace Trestlebridge.Actions
             // farm.PurchaseResource<IGrazing>(animal, choice);
 
         }
-        public static void AddAnimalToField(Farm farm, GrazingField field, IGrazing animal){
-            if (field.FieldFull)
-            {
-                Console.WriteLine("This field is full");
-                Console.WriteLine("Press Enter to Select New field");
-                Console.ReadLine();
-                CollectInput(farm, animal);
-            }
-            else
-            {
-                field.AddResource(animal);
-            }
-        }
+
     }
 }

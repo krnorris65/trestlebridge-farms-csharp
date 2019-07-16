@@ -32,7 +32,7 @@ namespace Trestlebridge.Actions
                 case 3:
                     break;
                 case 4:
-
+                    ChooseGrazingField.CollectInput(farm, new Ostrich());
                     break;
                 case 5:
                     break;
