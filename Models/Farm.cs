@@ -32,6 +32,11 @@ namespace Trestlebridge.Models
             GrazingFields.Add(field);
         }
 
+        // public void AddChickenHouse (ChickenHouse house)
+        // {
+
+        // }
+
         public override string ToString()
         {
             StringBuilder report = new StringBuilder();
