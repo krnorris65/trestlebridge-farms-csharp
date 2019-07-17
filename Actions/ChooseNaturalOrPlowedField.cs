@@ -47,6 +47,7 @@ namespace Trestlebridge.Actions
                 //index of list starts at 0, so the index will always be one less than the value the user selects
                 int plowedIndex = choice - 1;
                 int naturalIndex = plowedIndex - plowedFieldWithCapacity.Count;
+                //if the user selected a plowed field the choice would be equal to or less than the count of the plowedFieldWithCapacity
                 if (choice < plowedFieldWithCapacity.Count || choice == plowedFieldWithCapacity.Count)
                 {
                     //gets the field that was selected by the user
@@ -56,6 +57,7 @@ namespace Trestlebridge.Actions
                     // //adds plant to the Plowed Field on the farm
                     plowedField.AddResource(plant);
                 }
+                //if a user selected a natural field the choice would be greater than the count of the plowedFieldWithCapacity
                 else
                 {
                     NaturalField selectedField = naturalFieldWithCapacity[naturalIndex];
