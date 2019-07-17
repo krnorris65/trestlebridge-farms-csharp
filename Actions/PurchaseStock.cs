@@ -30,35 +30,53 @@ namespace Trestlebridge.Actions
             switch (Int32.Parse(choice))
             {
                 case 1:
-                    ChooseChickenHouse.CollectInput(farm, new Chicken());
+                    do
+                    {
+                        stayOnMenu = ChooseChickenHouse.CollectInput(farm, new Chicken());
+                    } 
+                    while (stayOnMenu);
                     break;
                 case 2:
-                    do{
+                    do
+                    {
                         stayOnMenu = ChooseGrazingField.CollectInput(farm, new Cow());
-                    }while(stayOnMenu);
+                    } 
+                    while (stayOnMenu);
                     break;
                 case 3:
-                    ChooseDuckHouse.CollectInput(farm, new Duck());
+                    do
+                    {
+                        stayOnMenu = ChooseDuckHouse.CollectInput(farm, new Duck());
+                    } 
+                    while (stayOnMenu);
                     break;
                 case 4:
-                    do{
+                    do
+                    {
                         stayOnMenu = ChooseGrazingField.CollectInput(farm, new Goat());
-                    }while(stayOnMenu);
+                    } 
+                    while (stayOnMenu);
                     break;
                 case 5:
-                    do{
+                    do
+                    {
                         stayOnMenu = ChooseGrazingField.CollectInput(farm, new Ostrich());
-                    }while(stayOnMenu);
+                    } 
+                    while (stayOnMenu);
                     break;
                 case 6:
-                    do{
+                    do
+                    {
                         stayOnMenu = ChooseGrazingField.CollectInput(farm, new Pig());
-                    }while(stayOnMenu);
+                    } 
+                    while (stayOnMenu);
                     break;
                 case 7:
-                    do{
+                    do
+                    {
                         stayOnMenu = ChooseGrazingField.CollectInput(farm, new Sheep());
-                    }while(stayOnMenu);
+                    } 
+                    while (stayOnMenu);
                     break;
                 default:
                     break;

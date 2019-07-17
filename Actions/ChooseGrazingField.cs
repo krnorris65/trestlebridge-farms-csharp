@@ -41,6 +41,7 @@ namespace Trestlebridge.Actions
                 GrazingField grazingField = farm.GrazingFields.Find(field => field.FieldId == selectedField.FieldId);
                 //adds animal to the Grazing Field on the farm
                 grazingField.AddResource(animal);
+                //return false so the user returns to the main menu
                 return false;
             }
             catch (Exception)
@@ -53,10 +54,12 @@ namespace Trestlebridge.Actions
                 //if user enters 0, they will be brought to the main menu, if they enter anything else they will be brought back to the facility menu
                 if (Console.ReadLine() == "0")
                 {
+                    //return false so the user returns to the main menu
                     return false;
                 }
                 else
                 {
+                    //return true so the user returns to the list of facilities
                     return true;
                 }
 
