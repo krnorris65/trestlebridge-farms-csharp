@@ -24,7 +24,7 @@ namespace Trestlebridge.Models.Facilities
             }
         }
 
-        public double PlantCapacity
+        public double Capacity
         {
             get
             {
