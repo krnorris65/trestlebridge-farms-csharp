@@ -3,26 +3,49 @@ using System.Linq;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
 using Trestlebridge.Models.Animals;
+using Trestlebridge.Models.Facilities;
 
-namespace Trestlebridge.Actions {
-    public class ChooseGrazingField {
-        public static void CollectInput (Farm farm, IGrazing animal) {
+namespace Trestlebridge.Actions
+{
+    public class ChooseGrazingField
+    {
+        public static void CollectInput(Farm farm, IGrazing animal)
+        {
             Console.Clear();
 
-            for (int i = 0; i < farm.GrazingFields.Count; i++)
+            //gets only the fields that are not full
+            var fieldWithCapacity = farm.GrazingFields.Where(field => !field.FieldFull).ToList();
+
+            //allows users to only select fields that have the capacity to add an animal
+            for (int i = 0; i < fieldWithCapacity.Count; i++)
             {
-                Console.WriteLine ($"{i + 1}. Grazing Field");
+                Console.WriteLine($"{i + 1}. Grazing Field");
             }
 
-            Console.WriteLine ();
+            Console.WriteLine();
 
             // How can I output the type of animal chosen here?
-            Console.WriteLine ($"Place the animal where?");
+            Console.WriteLine($"Place the animal where?");
 
-            Console.Write ("> ");
-            int choice = Int32.Parse(Console.ReadLine ());
+            Console.Write("> ");
+            int choice = Int32.Parse(Console.ReadLine());
+            //index of list starts at 0, so the index will always be one less than the value the user selects
+            int choiceIndex = choice - 1;
 
-            farm.GrazingFields[choice].AddResource(animal);
+            try
+            {
+                //gets the field that was selected by the user
+                GrazingField selectedField = fieldWithCapacity[choiceIndex];
+                //finds the field in the GrazingFields list on the farm instance using the FieldId
+                GrazingField grazingField = farm.GrazingFields.Find(field => field.FieldId == selectedField.FieldId);
+                //adds animal to the Grazing Field on the farm
+                grazingField.AddResource(animal);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                Console.WriteLine("Invalid Selection");
+                Console.ReadLine();
+            }
 
             /*
                 Couldn't get this to work. Can you?
@@ -31,5 +54,6 @@ namespace Trestlebridge.Actions {
             // farm.PurchaseResource<IGrazing>(animal, choice);
 
         }
+
     }
 }

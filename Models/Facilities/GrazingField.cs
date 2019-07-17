@@ -4,30 +4,49 @@ using System.Collections.Generic;
 using Trestlebridge.Interfaces;
 
 
-namespace Trestlebridge.Models.Facilities {
+namespace Trestlebridge.Models.Facilities
+{
     public class GrazingField : IFacility<IGrazing>
     {
-        private int _capacity = 50;
+        private int _capacity = 1;
         private Guid _id = Guid.NewGuid();
 
         private List<IGrazing> _animals = new List<IGrazing>();
 
-        public double Capacity {
-            get {
+        public bool FieldFull {
+            get
+            {
+                return _animals.Count == _capacity;
+            }
+        }
+
+        public double Capacity
+        {
+            get
+            {
                 return _capacity;
             }
         }
 
-        public void AddResource (IGrazing animal)
+        public Guid FieldId
         {
-            // TODO: implement this...
-            throw new NotImplementedException();
+            get
+            {
+                return _id;
+            }
         }
 
-        public void AddResource (List<IGrazing> animals) 
+        public void AddResource(IGrazing animal)
         {
             // TODO: implement this...
-            throw new NotImplementedException();
+            _animals.Add(animal);
+
+        }
+
+        public void AddResource(List<IGrazing> animals)
+        {
+            // TODO: implement this...
+            _animals.AddRange(animals);
         }
 
         public override string ToString()
