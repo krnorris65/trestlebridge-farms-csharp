@@ -1,22 +1,23 @@
 using System;
 using System.Text;
 using System.Collections.Generic;
+using Trestlebridge.Models.Animals;
 using Trestlebridge.Interfaces;
 
 
 namespace Trestlebridge.Models.Facilities
 {
-    public class ChickenHouse : IFacility<IMeatProducing>
+    public class ChickenHouse : IFacility<Chicken>
     {
         private int _capacity = 1;
         private Guid _id = Guid.NewGuid();
 
-        private List<IMeatProducing> _animals = new List<IMeatProducing>();
+        private List<Chicken> _chickens = new List<Chicken>();
 
         public bool FieldFull {
             get
             {
-                return _animals.Count == _capacity;
+                return _chickens.Count == _capacity;
             }
         }
 
@@ -36,17 +37,17 @@ namespace Trestlebridge.Models.Facilities
             }
         }
 
-        public void AddResource(IMeatProducing animal)
+        public void AddResource(Chicken chicken)
         {
             // TODO: implement this...
-            _animals.Add(animal);
+            _chickens.Add(chicken);
 
         }
 
-        public void AddResource(List<IMeatProducing> animals)
+        public void AddResource(List<Chicken> chickens)
         {
             // TODO: implement this...
-            _animals.AddRange(animals);
+            _chickens.AddRange(chickens);
         }
 
         public override string ToString()
@@ -54,8 +55,8 @@ namespace Trestlebridge.Models.Facilities
             StringBuilder output = new StringBuilder();
             string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
-            output.Append($"Grazing field {shortId} has {this._animals.Count} animals\n");
-            this._animals.ForEach(a => output.Append($"   {a}\n"));
+            output.Append($"Chicken House {shortId} has {this._chickens.Count} chickens\n");
+            this._chickens.ForEach(a => output.Append($"   {a}\n"));
 
             return output.ToString();
         }
