@@ -16,10 +16,12 @@ namespace Trestlebridge.Actions
             //gets only the houses that are not full
             var houseWithCapacity = farm.ChickenHouses.Where(house => house.TotalChickens != house.Capacity).ToList();
 
+            Console.WriteLine("Available Chicken Houses:");
+            Console.WriteLine("");
             //allows users to only select houses that have the capacity to add a chicken
             for (int i = 0; i < houseWithCapacity.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. Chicken House (currently has {houseWithCapacity[i].TotalChickens} chickens)");
+                Console.WriteLine($"{i + 1}. Chicken House ({houseWithCapacity[i].TotalChickens} Chickens)");
             }
 
             Console.WriteLine();

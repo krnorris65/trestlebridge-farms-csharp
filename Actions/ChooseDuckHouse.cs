@@ -17,9 +17,12 @@ namespace Trestlebridge.Actions
             var houseWithCapacity = farm.DuckHouses.Where(house => house.TotalDucks != house.Capacity).ToList();
 
             //allows users to only select houses that have the capacity to add a duck
+            Console.WriteLine("Available Duck Houses:");
+            Console.WriteLine("");
+            
             for (int i = 0; i < houseWithCapacity.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. Duck House (currently has {houseWithCapacity[i].TotalDucks} ducks)");
+                Console.WriteLine($"{i + 1}. Duck House ({houseWithCapacity[i].TotalDucks} Ducks)");
             }
 
             Console.WriteLine();
