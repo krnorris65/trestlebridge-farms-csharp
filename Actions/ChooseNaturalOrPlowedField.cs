@@ -56,6 +56,8 @@ namespace Trestlebridge.Actions
                     PlowedField plowedField = farm.PlowedFields.Find(field => field.FieldId == selectedField.FieldId);
                     // //adds plant to the Plowed Field on the farm
                     plowedField.AddResource(plant);
+                    //return false so the user returns to the main menu
+                    return false;
                 }
                 //if a user selected a natural field the choice would be greater than the count of the plowedFieldWithCapacity
                 else
@@ -65,10 +67,10 @@ namespace Trestlebridge.Actions
                     NaturalField naturalField = farm.NaturalFields.Find(field => field.FieldId == selectedField.FieldId);
                     //adds plant to the Natural Field on the farm
                     naturalField.AddResource(plant);
+                    //return false so the user returns to the main menu
+                    return false;
                 }
 
-                //return false so the user returns to the main menu
-                return false;
             }
             catch (Exception)
             {
