@@ -35,6 +35,7 @@ namespace Trestlebridge.Actions
                     Console.ReadLine();
                     break;
                 case 4:
+                    farm.AddDuckHouse(new DuckHouse());
                     Console.WriteLine("You added a new duck house!");
                     Console.WriteLine("Press any key to return to main menu");
                     Console.ReadLine();
