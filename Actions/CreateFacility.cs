@@ -28,6 +28,10 @@ namespace Trestlebridge.Actions
                     Console.ReadLine();
                     break;
                 case 3:
+                    farm.AddChickenHouse(new ChickenHouse());
+                    Console.WriteLine("You added a new chicken house!"); 
+                    Console.WriteLine("Press any key to return to main menu");
+                    Console.ReadLine();
                     break;
                 default:
                     break;
