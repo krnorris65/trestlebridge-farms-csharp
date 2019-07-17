@@ -24,7 +24,9 @@ namespace Trestlebridge.Actions
             Console.Write("> ");
             string choice = Console.ReadLine();
 
-            bool repeat = true;
+            //if user selection is valid then they return to main menu after animal is added to the facility
+            //if the user makes and invalid selection they can return to the menu to select a facility or return to the main menu
+            bool stayOnMenu = true;
             switch (Int32.Parse(choice))
             {
                 case 1:
@@ -32,31 +34,31 @@ namespace Trestlebridge.Actions
                     break;
                 case 2:
                     do{
-                        repeat = ChooseGrazingField.CollectInput(farm, new Cow());
-                    }while(repeat);
+                        stayOnMenu = ChooseGrazingField.CollectInput(farm, new Cow());
+                    }while(stayOnMenu);
                     break;
                 case 3:
                     ChooseDuckHouse.CollectInput(farm, new Duck());
                     break;
                 case 4:
                     do{
-                        repeat = ChooseGrazingField.CollectInput(farm, new Goat());
-                    }while(repeat);
+                        stayOnMenu = ChooseGrazingField.CollectInput(farm, new Goat());
+                    }while(stayOnMenu);
                     break;
                 case 5:
                     do{
-                        repeat = ChooseGrazingField.CollectInput(farm, new Ostrich());
-                    }while(repeat);
+                        stayOnMenu = ChooseGrazingField.CollectInput(farm, new Ostrich());
+                    }while(stayOnMenu);
                     break;
                 case 6:
                     do{
-                        repeat = ChooseGrazingField.CollectInput(farm, new Pig());
-                    }while(repeat);
+                        stayOnMenu = ChooseGrazingField.CollectInput(farm, new Pig());
+                    }while(stayOnMenu);
                     break;
                 case 7:
                     do{
-                        repeat = ChooseGrazingField.CollectInput(farm, new Sheep());
-                    }while(repeat);
+                        stayOnMenu = ChooseGrazingField.CollectInput(farm, new Sheep());
+                    }while(stayOnMenu);
                     break;
                 default:
                     break;

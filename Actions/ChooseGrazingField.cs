@@ -50,6 +50,7 @@ namespace Trestlebridge.Actions
                 Console.WriteLine("Please press enter to select another field or enter 0 to return to main menu");
                 Console.Write("> ");
 
+                //if user enters 0, they will be brought to the main menu, if they enter anything else they will be brought back to the facility menu
                 if (Console.ReadLine() == "0")
                 {
                     return false;
