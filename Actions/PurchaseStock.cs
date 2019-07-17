@@ -24,13 +24,16 @@ namespace Trestlebridge.Actions
             Console.Write("> ");
             string choice = Console.ReadLine();
 
+            bool repeat = true;
             switch (Int32.Parse(choice))
             {
                 case 1:
                     ChooseChickenHouse.CollectInput(farm, new Chicken());
                     break;
                 case 2:
-                    ChooseGrazingField.CollectInput(farm, new Cow());
+                    do{
+                        repeat = ChooseGrazingField.CollectInput(farm, new Cow());
+                    }while(repeat);
                     break;
                 case 3:
                     ChooseDuckHouse.CollectInput(farm, new Duck());
