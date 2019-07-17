@@ -14,12 +14,12 @@ namespace Trestlebridge.Actions
             Console.Clear();
 
             //gets only the fields that are not full
-            var fieldWithCapacity = farm.GrazingFields.Where(field => !field.FieldFull).ToList();
+            var fieldWithCapacity = farm.GrazingFields.Where(field => field.TotalAnimals != field.Capacity).ToList();
 
             //allows users to only select fields that have the capacity to add an animal
             for (int i = 0; i < fieldWithCapacity.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. Grazing Field");
+                Console.WriteLine($"{i + 1}. Grazing Field (has {fieldWithCapacity[i].TotalAnimals} animals)");
             }
 
             Console.WriteLine();
