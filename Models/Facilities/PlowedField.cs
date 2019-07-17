@@ -10,12 +10,13 @@ namespace Trestlebridge.Models.Facilities
     {
         // 13 rows of plants 
         // 5 plants per row (when purchase you purchase enough seeds for a whole row of plants)
-        private int _capacity = 13;
+        private int _capacityRows = 13;
+        private int _plantsPerRow = 5;
         private Guid _id = Guid.NewGuid();
 
         private List<ISeedProducing> _plantRows = new List<ISeedProducing>();
 
-        public int TotalPlants
+        public int TotalPlantRows
         {
             get
             {
@@ -23,11 +24,11 @@ namespace Trestlebridge.Models.Facilities
             }
         }
 
-        public double Capacity
+        public double PlantCapacity
         {
             get
             {
-                return _capacity;
+                return _capacityRows * _plantsPerRow;
             }
         }
 
@@ -38,14 +39,14 @@ namespace Trestlebridge.Models.Facilities
                 return _id;
             }
         }
-        public void AddResource(ISeedProducing plant)
+        public void AddResource(ISeedProducing plantRow)
         {
-            _plantRows.Add(plant);
+            _plantRows.Add(plantRow);
         }
 
-        public void AddResource(List<ISeedProducing> plants)
+        public void AddResource(List<ISeedProducing> plantRows)
         {
-            _plantRows.AddRange(plants);
+            _plantRows.AddRange(plantRows);
         }
 
 
