@@ -16,11 +16,19 @@ namespace Trestlebridge.Models.Facilities
 
         private List<ICompostProducing> _plantRows = new List<ICompostProducing>();
 
-        public int TotalPlants
+        public int TotalPlantRows
         {
             get
             {
                 return _plantRows.Count;
+            }
+        }
+
+        public bool FieldFull
+        {
+            get
+            {
+                return _plantRows.Count == _capacityRows;
             }
         }
 

@@ -37,7 +37,7 @@ namespace Trestlebridge.Actions
                     do
                     {
                         //natural field
-                        // stayOnMenu = ;
+                        stayOnMenu = ChooseNaturalField.CollectInput(farm, new Wildflower());
                     } 
                     while (stayOnMenu);
                     break;
