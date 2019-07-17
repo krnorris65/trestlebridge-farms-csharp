@@ -13,7 +13,11 @@ namespace Trestlebridge.Actions
         {
             Console.Clear();
 
-            for (int i = 0; i < farm.GrazingFields.Count; i++)
+            //gets only the fields that are not full
+            var fieldWithCapacity = farm.GrazingFields.Where(field => !field.FieldFull).ToList();
+
+            //allows users to only select fields that have the capacity to add an animal
+            for (int i = 0; i < fieldWithCapacity.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. Grazing Field");
             }
@@ -30,9 +34,12 @@ namespace Trestlebridge.Actions
 
             try
             {
-                GrazingField grazingField = farm.GrazingFields[choiceIndex];
+                //gets the field that was selected by the user
+                GrazingField selectedField = fieldWithCapacity[choiceIndex];
+                //finds the field in the GrazingFields list on the farm instance using the FieldId
+                GrazingField grazingField = farm.GrazingFields.Find(field => field.FieldId == selectedField.FieldId);
+                //adds animal to the Grazing Field on the farm
                 grazingField.AddResource(animal);
-
             }
             catch (ArgumentOutOfRangeException)
             {

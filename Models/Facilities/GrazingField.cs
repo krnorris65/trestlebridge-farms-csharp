@@ -8,7 +8,7 @@ namespace Trestlebridge.Models.Facilities
 {
     public class GrazingField : IFacility<IGrazing>
     {
-        private int _capacity = 50;
+        private int _capacity = 1;
         private Guid _id = Guid.NewGuid();
 
         private List<IGrazing> _animals = new List<IGrazing>();
@@ -25,6 +25,14 @@ namespace Trestlebridge.Models.Facilities
             get
             {
                 return _capacity;
+            }
+        }
+
+        public Guid FieldId
+        {
+            get
+            {
+                return _id;
             }
         }
 
