@@ -13,10 +13,10 @@ namespace Trestlebridge.Models.Facilities
 
         private List<IGrazing> _animals = new List<IGrazing>();
 
-        public bool FieldFull {
+        public int TotalAnimals {
             get
             {
-                return _animals.Count == _capacity;
+                return _animals.Count;
             }
         }
 

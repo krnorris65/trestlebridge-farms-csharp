@@ -14,12 +14,12 @@ namespace Trestlebridge.Actions
             Console.Clear();
 
             //gets only the houses that are not full
-            var houseWithCapacity = farm.DuckHouses.Where(house => !house.HouseFull).ToList();
+            var houseWithCapacity = farm.DuckHouses.Where(house => house.TotalDucks != house.Capacity).ToList();
 
             //allows users to only select houses that have the capacity to add a duck
             for (int i = 0; i < houseWithCapacity.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. Duck House");
+                Console.WriteLine($"{i + 1}. Duck House (currently has {houseWithCapacity[i].TotalDucks} ducks)");
             }
 
             Console.WriteLine();

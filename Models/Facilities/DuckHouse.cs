@@ -14,10 +14,10 @@ namespace Trestlebridge.Models.Facilities
 
         private List<Duck> _ducks = new List<Duck>();
 
-        public bool HouseFull {
+        public int TotalDucks {
             get
             {
-                return _ducks.Count == _capacity;
+                return _ducks.Count;
             }
         }
 
