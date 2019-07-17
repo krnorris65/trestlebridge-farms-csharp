@@ -14,7 +14,7 @@ namespace Trestlebridge.Models.Facilities
 
         private List<Duck> _ducks = new List<Duck>();
 
-        public bool FieldFull {
+        public bool HouseFull {
             get
             {
                 return _ducks.Count == _capacity;
@@ -29,7 +29,7 @@ namespace Trestlebridge.Models.Facilities
             }
         }
 
-        public Guid FieldId
+        public Guid HouseId
         {
             get
             {
