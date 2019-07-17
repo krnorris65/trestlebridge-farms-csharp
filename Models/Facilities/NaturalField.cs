@@ -10,12 +10,13 @@ namespace Trestlebridge.Models.Facilities
     {
         // 10 rows of plants 
         // 6 plants per row (when purchase you purchase enough seeds for a whole row of plants)
-        private int _capacity = 10;
+        private int _capacityRows = 10;
+        private int _plantsPerRow = 6;
         private Guid _id = Guid.NewGuid();
 
         private List<ICompostProducing> _plantRows = new List<ICompostProducing>();
 
-        public int TotalPlants
+        public int TotalPlantRows
         {
             get
             {
@@ -23,11 +24,19 @@ namespace Trestlebridge.Models.Facilities
             }
         }
 
+        public bool FieldFull
+        {
+            get
+            {
+                return _plantRows.Count == _capacityRows;
+            }
+        }
+
         public double Capacity
         {
             get
             {
-                return _capacity;
+                return _capacityRows * _plantsPerRow;
             }
         }
 
