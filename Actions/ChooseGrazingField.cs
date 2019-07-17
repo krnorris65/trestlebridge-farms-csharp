@@ -19,7 +19,11 @@ namespace Trestlebridge.Actions
             //allows users to only select fields that have the capacity to add an animal
             for (int i = 0; i < fieldWithCapacity.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. Grazing Field (currently has {fieldWithCapacity[i].TotalAnimals} animals)");
+                GrazingField currentField = fieldWithCapacity[i];
+                Console.WriteLine($"{i + 1}. Grazing Field (currently has {currentField.TotalAnimals} animals)");
+
+                currentField.GetAnimalTypes().ForEach(at => Console.WriteLine($"        {at.Type}: {at.Total}"));
+                
             }
 
             Console.WriteLine();

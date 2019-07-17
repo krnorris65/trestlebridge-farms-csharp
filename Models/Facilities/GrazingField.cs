@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
+using System.Linq;
 
 
 namespace Trestlebridge.Models.Facilities
@@ -13,7 +14,8 @@ namespace Trestlebridge.Models.Facilities
 
         private List<IGrazing> _animals = new List<IGrazing>();
 
-        public int TotalAnimals {
+        public int TotalAnimals
+        {
             get
             {
                 return _animals.Count;
@@ -47,6 +49,14 @@ namespace Trestlebridge.Models.Facilities
         {
             // TODO: implement this...
             _animals.AddRange(animals);
+        }
+
+        public List<AnimalType> GetAnimalTypes()
+        {
+            return (from animal in _animals
+                        group animal by animal.GetType().Name into animalType
+                        select new AnimalType{ Type = animalType.Key, Total = animalType.Count() }).ToList();
+            
         }
 
         public override string ToString()
