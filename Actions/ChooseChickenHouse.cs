@@ -9,7 +9,7 @@ namespace Trestlebridge.Actions
 {
     public class ChooseChickenHouse
     {
-        public static void CollectInput(Farm farm, Chicken chicken)
+        public static bool CollectInput(Farm farm, Chicken chicken)
         {
             Console.Clear();
 
@@ -27,23 +27,40 @@ namespace Trestlebridge.Actions
             Console.WriteLine($"Place the chicken where?");
 
             Console.Write("> ");
-            int choice = Int32.Parse(Console.ReadLine());
-            //index of list starts at 0, so the index will always be one less than the value the user selects
-            int choiceIndex = choice - 1;
 
             try
             {
+                int choice = Int32.Parse(Console.ReadLine());
+                //index of list starts at 0, so the index will always be one less than the value the user selects
+                int choiceIndex = choice - 1;
                 //gets the house that was selected by the user
                 ChickenHouse selectedHouse = houseWithCapacity[choiceIndex];
                 //finds the house in the ChickenHouses list on the farm instance using the houseId
                 ChickenHouse chickenHouse = farm.ChickenHouses.Find(field => field.HouseId == selectedHouse.HouseId);
                 //adds chicken to the Chicken House on the farm
                 chickenHouse.AddResource(chicken);
+                //return false so the user returns to the main menu
+                return false;
             }
-            catch (ArgumentOutOfRangeException)
+            catch (Exception)
             {
-                Console.WriteLine("Invalid Selection");
-                Console.ReadLine();
+                Console.Clear();
+                Console.WriteLine("Invalid Selection.");
+                Console.WriteLine("Please press enter to select another house or enter 0 to return to main menu");
+                Console.Write("> ");
+
+                //if user enters 0, they will be brought to the main menu, if they enter anything else they will be brought back to the facility menu
+                if (Console.ReadLine() == "0")
+                {
+                    //return false so the user returns to the main menu
+                    return false;
+                }
+                else
+                {
+                    //return true so the user returns to the list of facilities
+                    return true;
+                }
+
             }
 
             /*
