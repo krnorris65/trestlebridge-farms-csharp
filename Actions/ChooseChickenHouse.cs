@@ -37,7 +37,7 @@ namespace Trestlebridge.Actions
                 ChickenHouse selectedHouse = houseWithCapacity[choiceIndex];
                 //finds the house in the ChickenHouses list on the farm instance using the houseId
                 ChickenHouse chickenHouse = farm.ChickenHouses.Find(field => field.HouseId == selectedHouse.HouseId);
-                //adds chicek to the Chicken House on the farm
+                //adds chicken to the Chicken House on the farm
                 chickenHouse.AddResource(chicken);
             }
             catch (ArgumentOutOfRangeException)
