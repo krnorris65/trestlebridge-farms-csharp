@@ -29,7 +29,7 @@ namespace Trestlebridge.Actions
                     do
                     {
                         //either plowed or natural field
-                        // stayOnMenu = ;
+                        stayOnMenu = ChooseNaturalOrPlowedField.CollectInput(farm, new Sunflower());
                     } 
                     while (stayOnMenu);
                     break;
@@ -45,7 +45,7 @@ namespace Trestlebridge.Actions
                     do
                     {
                         //plowed field
-                        // stayOnMenu = ;
+                        stayOnMenu = ChoosePlowedField.CollectInput(farm, new Sesame());
                     } 
                     while (stayOnMenu);
                     break;

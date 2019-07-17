@@ -24,6 +24,14 @@ namespace Trestlebridge.Models.Facilities
             }
         }
 
+        public bool FieldFull
+        {
+            get
+            {
+                return _plantRows.Count == _capacityRows;
+            }
+        }
+
         public double Capacity
         {
             get

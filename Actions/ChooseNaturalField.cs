@@ -17,7 +17,7 @@ namespace Trestlebridge.Actions
 
             Console.WriteLine("Available Natural Fields:");
             Console.WriteLine("");
-            //allows users to only select fields that have the capacity to add an animal
+            //allows users to only select fields that have the capacity to add plants
             for (int i = 0; i < fieldWithCapacity.Count; i++)
             {
                 NaturalField currentField = fieldWithCapacity[i];
@@ -42,7 +42,7 @@ namespace Trestlebridge.Actions
                 NaturalField selectedField = fieldWithCapacity[choiceIndex];
                 //finds the field in the NaturalFields list on the farm instance using the FieldId
                 NaturalField naturalField = farm.NaturalFields.Find(field => field.FieldId == selectedField.FieldId);
-                //adds animal to the Natural Field on the farm
+                //adds plant to the Natural Field on the farm
                 naturalField.AddResource(plant);
                 //return false so the user returns to the main menu
                 return false;
@@ -54,7 +54,7 @@ namespace Trestlebridge.Actions
                 Console.WriteLine("Please press enter to select another field or enter 0 to return to main menu");
                 Console.Write("> ");
 
-                //if user enters 0, they will be brought to the main menu, if they enter anything else they will be brought back to the facility menu
+                //if user enters 0, they will be brought to the main menu, if they enter anything else they will be brought back to the field menu
                 if (Console.ReadLine() == "0")
                 {
                     //return false so the user returns to the main menu
@@ -62,17 +62,11 @@ namespace Trestlebridge.Actions
                 }
                 else
                 {
-                    //return true so the user returns to the list of facilities
+                    //return true so the user returns to the list of fields
                     return true;
                 }
 
             }
-
-            /*
-                Couldn't get this to work. Can you?
-                Stretch goal. Only if the app is fully functional.
-             */
-            // farm.PurchaseResource<IGrazing>(animal, choice);
 
         }
 
