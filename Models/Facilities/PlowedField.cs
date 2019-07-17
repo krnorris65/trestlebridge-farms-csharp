@@ -6,14 +6,14 @@ using Trestlebridge.Interfaces;
 
 namespace Trestlebridge.Models.Facilities
 {
-    public class NaturalField : IFacility<ICompostProducing>
+    public class PlowedField : IFacility<ISeedProducing>
     {
-        // 10 rows of plants 
-        // 6 plants per row (when purchase you purchase enough seeds for a whole row of plants)
-        private int _capacity = 10;
+        // 13 rows of plants 
+        // 5 plants per row (when purchase you purchase enough seeds for a whole row of plants)
+        private int _capacity = 13;
         private Guid _id = Guid.NewGuid();
 
-        private List<ICompostProducing> _plantRows = new List<ICompostProducing>();
+        private List<ISeedProducing> _plantRows = new List<ISeedProducing>();
 
         public int TotalPlants
         {
@@ -38,12 +38,12 @@ namespace Trestlebridge.Models.Facilities
                 return _id;
             }
         }
-        public void AddResource(ICompostProducing plant)
+        public void AddResource(ISeedProducing plant)
         {
             _plantRows.Add(plant);
         }
 
-        public void AddResource(List<ICompostProducing> plants)
+        public void AddResource(List<ISeedProducing> plants)
         {
             _plantRows.AddRange(plants);
         }
@@ -54,7 +54,7 @@ namespace Trestlebridge.Models.Facilities
             StringBuilder output = new StringBuilder();
             string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
-            output.Append($"Natural field {shortId} has {this._plantRows.Count} rows of plants\n");
+            output.Append($"Plowed field {shortId} has {this._plantRows.Count} rows of plants\n");
             this._plantRows.ForEach(a => output.Append($"   {a}\n"));
 
             return output.ToString();
