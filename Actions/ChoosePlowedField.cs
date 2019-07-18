@@ -23,7 +23,7 @@ namespace Trestlebridge.Actions
                 PlowedField currentField = fieldWithCapacity[i];
                 Console.WriteLine($"{i + 1}. Plowed Field");
 
-                
+
             }
 
             Console.WriteLine();
@@ -44,6 +44,9 @@ namespace Trestlebridge.Actions
                 PlowedField plowedField = farm.PlowedFields.Find(field => field.FieldId == selectedField.FieldId);
                 //adds plant to the Plowed Field on the farm
                 plowedField.AddResource(plant);
+                Console.WriteLine("You added a plant to a plowed field!");
+                Console.WriteLine("Press any key to return to main menu");
+                Console.ReadLine();
                 //return false so the user returns to the main menu
                 return false;
             }

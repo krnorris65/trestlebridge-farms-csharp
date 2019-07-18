@@ -23,7 +23,7 @@ namespace Trestlebridge.Actions
                 NaturalField currentField = fieldWithCapacity[i];
                 Console.WriteLine($"{i + 1}. Natural Field");
 
-                
+
             }
 
             Console.WriteLine();
@@ -44,6 +44,9 @@ namespace Trestlebridge.Actions
                 NaturalField naturalField = farm.NaturalFields.Find(field => field.FieldId == selectedField.FieldId);
                 //adds plant to the Natural Field on the farm
                 naturalField.AddResource(plant);
+                Console.WriteLine("You added a plant to a natural field!");
+                Console.WriteLine("Press any key to return to main menu");
+                Console.ReadLine();
                 //return false so the user returns to the main menu
                 return false;
             }
