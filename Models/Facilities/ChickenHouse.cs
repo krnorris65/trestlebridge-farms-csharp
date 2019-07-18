@@ -9,6 +9,7 @@ namespace Trestlebridge.Models.Facilities
 {
     public class ChickenHouse : IFacility<Chicken>
     {
+        public string Name {get; } = "Chicken House";
         private int _capacity = 15;
         private Guid _id = Guid.NewGuid();
 

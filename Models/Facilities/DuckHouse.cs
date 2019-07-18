@@ -9,12 +9,15 @@ namespace Trestlebridge.Models.Facilities
 {
     public class DuckHouse : IFacility<Duck>
     {
+        public string Name { get; } = "Duck House";
+
         private int _capacity = 12;
         private Guid _id = Guid.NewGuid();
 
         private List<Duck> _ducks = new List<Duck>();
 
-        public int TotalDucks {
+        public int TotalDucks
+        {
             get
             {
                 return _ducks.Count;
