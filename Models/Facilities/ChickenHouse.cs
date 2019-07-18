@@ -15,7 +15,7 @@ namespace Trestlebridge.Models.Facilities
 
         private List<Chicken> _chickens = new List<Chicken>();
 
-        public int TotalChickens {
+        public int TotalAnimals {
             get
             {
                 return _chickens.Count;

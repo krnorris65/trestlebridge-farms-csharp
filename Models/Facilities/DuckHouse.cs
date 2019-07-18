@@ -16,7 +16,7 @@ namespace Trestlebridge.Models.Facilities
 
         private List<Duck> _ducks = new List<Duck>();
 
-        public int TotalDucks
+        public int TotalAnimals
         {
             get
             {

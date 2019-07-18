@@ -25,6 +25,15 @@ namespace Trestlebridge.Actions
             Console.WriteLine("Choose facility to process animals from.");
 
             Console.Write("> ");
+            var input = Console.ReadLine();
+
+            int facilityIndex = Int32.Parse(input) - 1;
+
+            var facilityChoosen = meatFacilities[facilityIndex];
+
+            Console.WriteLine($"{facilityChoosen.Name}");
+
+            Console.ReadLine();
 
         }
     }
