@@ -21,7 +21,7 @@ namespace Trestlebridge.Actions
             for (int i = 0; i < fieldWithCapacity.Count; i++)
             {
                 PlowedField currentField = fieldWithCapacity[i];
-                Console.WriteLine($"{i + 1}. Plowed Field");
+                Console.WriteLine($"{i + 1}. Plowed Field ({currentField.TotalPlants} plants)");
 
 
             }

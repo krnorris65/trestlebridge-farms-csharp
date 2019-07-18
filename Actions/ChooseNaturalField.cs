@@ -21,9 +21,7 @@ namespace Trestlebridge.Actions
             for (int i = 0; i < fieldWithCapacity.Count; i++)
             {
                 NaturalField currentField = fieldWithCapacity[i];
-                Console.WriteLine($"{i + 1}. Natural Field");
-
-
+                Console.WriteLine($"{i + 1}. Natural Field ({currentField.TotalPlants} plants)");
             }
 
             Console.WriteLine();

@@ -23,14 +23,14 @@ namespace Trestlebridge.Actions
             for (int i = 0; i < plowedFieldWithCapacity.Count; i++)
             {
                 PlowedField currentField = plowedFieldWithCapacity[i];
-                Console.WriteLine($"{plantNum + 1}. Plowed Field");
+                Console.WriteLine($"{plantNum + 1}. Plowed Field ({currentField.TotalPlants} plants)");
                 plantNum++;
             }
 
             for (int i = 0; i < naturalFieldWithCapacity.Count; i++)
             {
                 NaturalField currentField = naturalFieldWithCapacity[i];
-                Console.WriteLine($"{plantNum + 1}. Natural Field");
+                Console.WriteLine($"{plantNum + 1}. Natural Field ({currentField.TotalPlants} plants)");
                 plantNum++;
             }
 
