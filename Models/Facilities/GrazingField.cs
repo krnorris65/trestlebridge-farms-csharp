@@ -51,12 +51,12 @@ namespace Trestlebridge.Models.Facilities
             _animals.AddRange(animals);
         }
 
-        public List<AnimalType> GetAnimalTypes()
+        public List<ResourceType> GetAnimalTypes()
         {
             return (from animal in _animals
                         group animal by animal.GetType().Name into animalType
-                        select new AnimalType{ Type = animalType.Key, Total = animalType.Count() }).ToList();
-            
+                        select new ResourceType{ Type = animalType.Key, Total = animalType.Count() }).ToList();
+
         }
 
         public override string ToString()

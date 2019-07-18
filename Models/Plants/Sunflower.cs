@@ -30,7 +30,7 @@ namespace Trestlebridge.Models.Plants
 
         public override string ToString()
         {
-            return $"Sunflower {this._shortId}. Pretty!";
+            return $"Sunflower plants {this._shortId}. Pretty!";
         }
     }
 }
