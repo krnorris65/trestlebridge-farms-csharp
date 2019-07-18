@@ -23,14 +23,14 @@ namespace Trestlebridge.Actions
             for (int i = 0; i < plowedFieldWithCapacity.Count; i++)
             {
                 PlowedField currentField = plowedFieldWithCapacity[i];
-                Console.WriteLine($"{plantNum + 1}. Plowed Field");
+                Console.WriteLine($"{plantNum + 1}. Plowed Field ({currentField.TotalPlants} plants)");
                 plantNum++;
             }
 
             for (int i = 0; i < naturalFieldWithCapacity.Count; i++)
             {
                 NaturalField currentField = naturalFieldWithCapacity[i];
-                Console.WriteLine($"{plantNum + 1}. Natural Field");
+                Console.WriteLine($"{plantNum + 1}. Natural Field ({currentField.TotalPlants} plants)");
                 plantNum++;
             }
 
@@ -56,6 +56,9 @@ namespace Trestlebridge.Actions
                     PlowedField plowedField = farm.PlowedFields.Find(field => field.FieldId == selectedField.FieldId);
                     // //adds plant to the Plowed Field on the farm
                     plowedField.AddResource(plant);
+                    Console.WriteLine("You added a plant to a plowed field!");
+                    Console.WriteLine("Press any key to return to main menu");
+                    Console.ReadLine();
                     //return false so the user returns to the main menu
                     return false;
                 }
@@ -67,6 +70,9 @@ namespace Trestlebridge.Actions
                     NaturalField naturalField = farm.NaturalFields.Find(field => field.FieldId == selectedField.FieldId);
                     //adds plant to the Natural Field on the farm
                     naturalField.AddResource(plant);
+                    Console.WriteLine("You added a plant to a natural field!");
+                    Console.WriteLine("Press any key to return to main menu");
+                    Console.ReadLine();
                     //return false so the user returns to the main menu
                     return false;
                 }

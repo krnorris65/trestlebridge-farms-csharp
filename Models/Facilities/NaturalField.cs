@@ -16,11 +16,11 @@ namespace Trestlebridge.Models.Facilities
 
         private List<ICompostProducing> _plantRows = new List<ICompostProducing>();
 
-        public int TotalPlantRows
+        public int TotalPlants
         {
             get
             {
-                return _plantRows.Count;
+                return _plantRows.Count * _plantsPerRow;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Trestlebridge.Models.Facilities
             StringBuilder output = new StringBuilder();
             string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
-            output.Append($"Natural field {shortId} has {this._plantRows.Count} rows of plants\n");
+            output.Append($"Natural field {shortId} has {this._plantRows.Count} rows of plants ({this._plantsPerRow} plants/row\n");
             this._plantRows.ForEach(a => output.Append($"   {a}\n"));
 
             return output.ToString();
