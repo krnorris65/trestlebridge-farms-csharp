@@ -22,36 +22,40 @@ namespace Trestlebridge.Actions
 
             //if user selection is valid then they return to main menu after animal is added to the facility
             //if the user makes and invalid selection they can return to the menu to select a facility or return to the main menu
-            bool stayOnMenu = true;
-            switch (Int32.Parse(choice))
+            try
             {
-                case 1:
-                    do
-                    {
-                        //either plowed or natural field
-                        stayOnMenu = ChooseNaturalOrPlowedField.CollectInput(farm, new Sunflower());
-                    } 
-                    while (stayOnMenu);
-                    break;
-                case 2:
-                    do
-                    {
-                        //natural field
-                        stayOnMenu = ChooseNaturalField.CollectInput(farm, new Wildflower());
-                    } 
-                    while (stayOnMenu);
-                    break;
-                case 3:
-                    do
-                    {
-                        //plowed field
-                        stayOnMenu = ChoosePlowedField.CollectInput(farm, new Sesame());
-                    } 
-                    while (stayOnMenu);
-                    break;
-                default:
-                    break;
+                bool stayOnMenu = true;
+                switch (Int32.Parse(choice))
+                {
+                    case 1:
+                        do
+                        {
+                            //either plowed or natural field
+                            stayOnMenu = ChooseNaturalOrPlowedField.CollectInput(farm, new Sunflower());
+                        }
+                        while (stayOnMenu);
+                        break;
+                    case 2:
+                        do
+                        {
+                            //natural field
+                            stayOnMenu = ChooseNaturalField.CollectInput(farm, new Wildflower());
+                        }
+                        while (stayOnMenu);
+                        break;
+                    case 3:
+                        do
+                        {
+                            //plowed field
+                            stayOnMenu = ChoosePlowedField.CollectInput(farm, new Sesame());
+                        }
+                        while (stayOnMenu);
+                        break;
+                    default:
+                        break;
+                }
             }
+            catch (Exception) { }
         }
     }
 }

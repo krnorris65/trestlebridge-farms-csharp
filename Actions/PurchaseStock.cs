@@ -26,61 +26,65 @@ namespace Trestlebridge.Actions
 
             //if user selection is valid then they return to main menu after animal is added to the facility
             //if the user makes and invalid selection they can return to the menu to select a facility or return to the main menu
-            bool stayOnMenu = true;
-            switch (Int32.Parse(choice))
+            try
             {
-                case 1:
-                    do
-                    {
-                        stayOnMenu = ChooseChickenHouse.CollectInput(farm, new Chicken());
-                    } 
-                    while (stayOnMenu);
-                    break;
-                case 2:
-                    do
-                    {
-                        stayOnMenu = ChooseGrazingField.CollectInput(farm, new Cow());
-                    } 
-                    while (stayOnMenu);
-                    break;
-                case 3:
-                    do
-                    {
-                        stayOnMenu = ChooseDuckHouse.CollectInput(farm, new Duck());
-                    } 
-                    while (stayOnMenu);
-                    break;
-                case 4:
-                    do
-                    {
-                        stayOnMenu = ChooseGrazingField.CollectInput(farm, new Goat());
-                    } 
-                    while (stayOnMenu);
-                    break;
-                case 5:
-                    do
-                    {
-                        stayOnMenu = ChooseGrazingField.CollectInput(farm, new Ostrich());
-                    } 
-                    while (stayOnMenu);
-                    break;
-                case 6:
-                    do
-                    {
-                        stayOnMenu = ChooseGrazingField.CollectInput(farm, new Pig());
-                    } 
-                    while (stayOnMenu);
-                    break;
-                case 7:
-                    do
-                    {
-                        stayOnMenu = ChooseGrazingField.CollectInput(farm, new Sheep());
-                    } 
-                    while (stayOnMenu);
-                    break;
-                default:
-                    break;
+                bool stayOnMenu = true;
+                switch (Int32.Parse(choice))
+                {
+                    case 1:
+                        do
+                        {
+                            stayOnMenu = ChooseChickenHouse.CollectInput(farm, new Chicken());
+                        }
+                        while (stayOnMenu);
+                        break;
+                    case 2:
+                        do
+                        {
+                            stayOnMenu = ChooseGrazingField.CollectInput(farm, new Cow());
+                        }
+                        while (stayOnMenu);
+                        break;
+                    case 3:
+                        do
+                        {
+                            stayOnMenu = ChooseDuckHouse.CollectInput(farm, new Duck());
+                        }
+                        while (stayOnMenu);
+                        break;
+                    case 4:
+                        do
+                        {
+                            stayOnMenu = ChooseGrazingField.CollectInput(farm, new Goat());
+                        }
+                        while (stayOnMenu);
+                        break;
+                    case 5:
+                        do
+                        {
+                            stayOnMenu = ChooseGrazingField.CollectInput(farm, new Ostrich());
+                        }
+                        while (stayOnMenu);
+                        break;
+                    case 6:
+                        do
+                        {
+                            stayOnMenu = ChooseGrazingField.CollectInput(farm, new Pig());
+                        }
+                        while (stayOnMenu);
+                        break;
+                    case 7:
+                        do
+                        {
+                            stayOnMenu = ChooseGrazingField.CollectInput(farm, new Sheep());
+                        }
+                        while (stayOnMenu);
+                        break;
+                    default:
+                        break;
+                }
             }
+            catch (Exception) { }
         }
     }
 }
