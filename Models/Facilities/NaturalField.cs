@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
-
+using System.Linq;
 
 namespace Trestlebridge.Models.Facilities
 {
@@ -57,14 +57,22 @@ namespace Trestlebridge.Models.Facilities
             _plantRows.AddRange(plants);
         }
 
+        public List<ResourceType> GetPlantTypes()
+        {
+            return (from plant in _plantRows
+                    group plant by plant.GetType().Name into plantType
+                    select new ResourceType { Type = plantType.Key, Total = (plantType.Count() * _plantsPerRow) }).ToList();
+
+        }
+
 
         public override string ToString()
         {
             StringBuilder output = new StringBuilder();
             string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
-            output.Append($"Natural field {shortId} has {this._plantRows.Count} rows of plants ({this._plantsPerRow} plants/row\n");
-            this._plantRows.ForEach(a => output.Append($"   {a}\n"));
+            output.Append($"Natural field {shortId} has {this.TotalPlants} plants ({this._plantRows.Count} rows)\n");
+            this._plantRows.ForEach(a => output.Append($"   {_plantsPerRow} {a}\n"));
 
             return output.ToString();
         }

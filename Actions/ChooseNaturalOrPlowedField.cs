@@ -22,15 +22,17 @@ namespace Trestlebridge.Actions
             int plantNum = 0;
             for (int i = 0; i < plowedFieldWithCapacity.Count; i++)
             {
-                PlowedField currentField = plowedFieldWithCapacity[i];
-                Console.WriteLine($"{plantNum + 1}. Plowed Field ({currentField.TotalPlants} plants)");
+                PlowedField currentPField = plowedFieldWithCapacity[i];
+                Console.WriteLine($"{plantNum + 1}. Plowed Field ({currentPField.TotalPlants} plants)");
+                currentPField.GetPlantTypes().ForEach(at => Console.WriteLine($"        {at.Type}: {at.Total} plants"));
                 plantNum++;
             }
 
             for (int i = 0; i < naturalFieldWithCapacity.Count; i++)
             {
-                NaturalField currentField = naturalFieldWithCapacity[i];
-                Console.WriteLine($"{plantNum + 1}. Natural Field ({currentField.TotalPlants} plants)");
+                NaturalField currentNField = naturalFieldWithCapacity[i];
+                Console.WriteLine($"{plantNum + 1}. Natural Field ({currentNField.TotalPlants} plants)");
+                currentNField.GetPlantTypes().ForEach(at => Console.WriteLine($"        {at.Type}: {at.Total} plants"));
                 plantNum++;
             }
 

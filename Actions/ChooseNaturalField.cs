@@ -22,6 +22,8 @@ namespace Trestlebridge.Actions
             {
                 NaturalField currentField = fieldWithCapacity[i];
                 Console.WriteLine($"{i + 1}. Natural Field ({currentField.TotalPlants} plants)");
+
+                currentField.GetPlantTypes().ForEach(at => Console.WriteLine($"        {at.Type}: {at.Total} plants"));
             }
 
             Console.WriteLine();

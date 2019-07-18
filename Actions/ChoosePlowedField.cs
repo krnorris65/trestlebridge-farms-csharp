@@ -23,7 +23,7 @@ namespace Trestlebridge.Actions
                 PlowedField currentField = fieldWithCapacity[i];
                 Console.WriteLine($"{i + 1}. Plowed Field ({currentField.TotalPlants} plants)");
 
-
+                currentField.GetPlantTypes().ForEach(at => Console.WriteLine($"        {at.Type}: {at.Total} plants"));
             }
 
             Console.WriteLine();
