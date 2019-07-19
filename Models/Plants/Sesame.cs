@@ -7,7 +7,7 @@ namespace Trestlebridge.Models.Plants
     {
         private Guid _id = Guid.NewGuid();
 
-        private int _seedsProduced = 520;
+        private int _seedsProducedPerPlant = 8;
         public string Type { get; } = "Sesame";
 
         private string _shortId
@@ -20,7 +20,7 @@ namespace Trestlebridge.Models.Plants
 
         public double Harvest()
         {
-            return _seedsProduced;
+            return _seedsProducedPerPlant;
         }
 
         public override string ToString()

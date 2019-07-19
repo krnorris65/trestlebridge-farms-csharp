@@ -13,12 +13,12 @@ namespace Trestlebridge.Models.Plants
                 return this._id.ToString().Substring(this._id.ToString().Length - 6);
             }
         }
-        private double _compostProduced = 30.3;
+        private double _compostProducedPerPlant = 0.51;
         public string Type { get; } = "Wildflower";
 
         public double CollectCompost()
         {
-            return _compostProduced;
+            return _compostProducedPerPlant;
         }
 
         public override string ToString () {
