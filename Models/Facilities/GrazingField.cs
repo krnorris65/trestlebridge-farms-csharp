@@ -40,6 +40,14 @@ namespace Trestlebridge.Models.Facilities
             }
         }
 
+        public List<IGrazing> Resources
+        {
+            get
+            {
+                return _animals;
+            }
+        }
+
         public void AddResource(IGrazing animal)
         {
             // TODO: implement this...

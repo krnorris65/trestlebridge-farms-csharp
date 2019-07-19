@@ -13,12 +13,12 @@ namespace Trestlebridge.Models.Facilities
         private int _capacity = 15;
         private Guid _id = Guid.NewGuid();
 
-        private List<Chicken> _chickens = new List<Chicken>();
+        private List<Chicken> _animals = new List<Chicken>();
 
         public int TotalAnimals {
             get
             {
-                return _chickens.Count;
+                return _animals.Count;
             }
         }
 
@@ -38,17 +38,25 @@ namespace Trestlebridge.Models.Facilities
             }
         }
 
+        public List<Chicken> Resources
+        {
+            get
+            {
+                return _animals;
+            }
+        }
+
         public void AddResource(Chicken chicken)
         {
             // TODO: implement this...
-            _chickens.Add(chicken);
+            _animals.Add(chicken);
 
         }
 
         public void AddResource(List<Chicken> chickens)
         {
             // TODO: implement this...
-            _chickens.AddRange(chickens);
+            _animals.AddRange(chickens);
         }
 
         public override string ToString()
@@ -56,8 +64,8 @@ namespace Trestlebridge.Models.Facilities
             StringBuilder output = new StringBuilder();
             string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
-            output.Append($"Chicken House {shortId} has {this._chickens.Count} chickens\n");
-            this._chickens.ForEach(a => output.Append($"   {a}\n"));
+            output.Append($"Chicken House {shortId} has {this._animals.Count} chickens\n");
+            this._animals.ForEach(a => output.Append($"   {a}\n"));
 
             return output.ToString();
         }

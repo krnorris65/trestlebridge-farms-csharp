@@ -31,6 +31,8 @@ namespace Trestlebridge.Actions
 
             var facilityChoosen = meatFacilities[facilityIndex];
 
+            // facilityChoosen.GetAnimalTypes().ForEach(at => Console.WriteLine("{at.Type}"));
+
             Console.WriteLine($"{facilityChoosen.Name}");
 
             Console.ReadLine();
