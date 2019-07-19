@@ -37,9 +37,6 @@ namespace Trestlebridge.Actions
             Dictionary<string,int> availableResources = new Dictionary<string,int>();
 
 
-
-            int rNum = 1;
-
             foreach (var resource in facilityChoosen.Resources)
             {
                 if (resource is IMeatProducing)
@@ -51,10 +48,16 @@ namespace Trestlebridge.Actions
                     {
                         availableResources[resource.GetType().Name] ++;
                     }
-                    rNum++;
                 }
             }
 
+            int rNum = 1;
+            foreach(KeyValuePair<string, int> type in availableResources)
+            {
+                Console.WriteLine($"{rNum}. {type.Value} {type.Key}s");
+                    rNum++;
+            }
+            Console.Write(">");
             Console.ReadLine();
 
         }
