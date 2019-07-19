@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
+using System.Linq;
 
 namespace Trestlebridge.Actions
 {
@@ -26,39 +27,43 @@ namespace Trestlebridge.Actions
             Console.WriteLine("Choose facility to process animals from.");
 
             Console.Write("> ");
-            var input = Console.ReadLine();
 
-            int facilityIndex = Int32.Parse(input) - 1;
+            int facilityIndex = Int32.Parse(Console.ReadLine()) - 1;
 
             var facilityChoosen = meatFacilities[facilityIndex];
             Console.Clear();
             Console.WriteLine("Select an animal to process:");
 
-            Dictionary<string,int> availableResources = new Dictionary<string,int>();
-
+            List<IMeatProducing> availableResourcesList = new List<IMeatProducing>();
 
             foreach (var resource in facilityChoosen.Resources)
             {
                 if (resource is IMeatProducing)
                 {
-                    try{
-                    availableResources.Add(resource.GetType().Name, 1);
-                    }
-                    catch(Exception)
-                    {
-                        availableResources[resource.GetType().Name] ++;
-                    }
+                    availableResourcesList.Add(resource);
                 }
             }
 
+            List<ResourceType> animalTypeTotals = (from animal in availableResourcesList
+                    group animal by animal.GetType().Name into animalType
+                    select new ResourceType { Type = animalType.Key, Total = animalType.Count() }).ToList();
+
             int rNum = 1;
-            foreach(KeyValuePair<string, int> type in availableResources)
+            foreach(var animalType in animalTypeTotals)
             {
-                Console.WriteLine($"{rNum}. {type.Value} {type.Key}s");
-                    rNum++;
+                Console.WriteLine($"{rNum}. {animalType.Total} {animalType.Type}s");
+                rNum++;
             }
             Console.Write(">");
+
+            int animalTypeIndex = Int32.Parse(Console.ReadLine()) - 1;
+
+            var animalTypeChoosen = animalTypeTotals[animalTypeIndex];
+            // Console.Clear();
+            Console.WriteLine($"How many {animalTypeChoosen.Type}s do you want to process?");
             Console.ReadLine();
+
+
 
         }
     }
