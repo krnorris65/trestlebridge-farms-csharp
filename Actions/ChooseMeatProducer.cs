@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
 
 namespace Trestlebridge.Actions
@@ -30,10 +31,29 @@ namespace Trestlebridge.Actions
             int facilityIndex = Int32.Parse(input) - 1;
 
             var facilityChoosen = meatFacilities[facilityIndex];
+            Console.Clear();
+            Console.WriteLine("Select an animal to process:");
 
-            // facilityChoosen.GetAnimalTypes().ForEach(at => Console.WriteLine("{at.Type}"));
+            Dictionary<string,int> availableResources = new Dictionary<string,int>();
 
-            Console.WriteLine($"{facilityChoosen.Name}");
+
+
+            int rNum = 1;
+
+            foreach (var resource in facilityChoosen.Resources)
+            {
+                if (resource is IMeatProducing)
+                {
+                    try{
+                    availableResources.Add(resource.GetType().Name, 1);
+                    }
+                    catch(Exception)
+                    {
+                        availableResources[resource.GetType().Name] ++;
+                    }
+                    rNum++;
+                }
+            }
 
             Console.ReadLine();
 
