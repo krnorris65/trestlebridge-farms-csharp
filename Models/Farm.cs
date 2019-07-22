@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Trestlebridge.Interfaces;
+using Trestlebridge.Models.Equipment;
 using Trestlebridge.Models.Facilities;
 
 namespace Trestlebridge.Models
@@ -16,6 +17,9 @@ namespace Trestlebridge.Models
 
         public List<NaturalField> NaturalFields {get;} = new List<NaturalField>();
         public List<PlowedField> PlowedFields {get;} = new List<PlowedField>();
+
+        public MeatProcessor MeatProcessor { get; set; } = new MeatProcessor();
+
 
         /*
             This method must specify the correct product interface of the
