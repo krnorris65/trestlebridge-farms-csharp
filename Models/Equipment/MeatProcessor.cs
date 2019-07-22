@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models.Facilities;
 
@@ -13,10 +15,22 @@ namespace Trestlebridge.Models.Equipment
 
         public void ProcessResources()
             {
+                Dictionary<string, double> meatProduced = new Dictionary<string, double>();
                 Resources.ForEach(animal => {
                     IMeatProducing resource = (IMeatProducing)animal;
-                    System.Console.WriteLine($"{resource.Butcher()}kg of meat was produced");
+                    try
+                    {
+                        meatProduced.Add(resource.GetType().Name, resource.Butcher());
+                    }
+                    catch(Exception)
+                    {
+                        meatProduced[resource.GetType().Name] += resource.Butcher();
+                    }
                 });
+                foreach(KeyValuePair<string, double> animal in meatProduced){
+
+                    System.Console.WriteLine($"{animal.Value}kg of {animal.Key} meat was produced");
+                }
             }
         
         public void ProcessResources(List<IMeatProducing> animals)
