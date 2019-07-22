@@ -1,5 +1,6 @@
 using System;
 using Trestlebridge.Models;
+using Trestlebridge.Models.Equipment;
 
 namespace Trestlebridge.Actions
 {
@@ -21,6 +22,7 @@ namespace Trestlebridge.Actions
             try
             {
 
+
                 switch (Int32.Parse(input))
                 {
                     case 1:
@@ -28,7 +30,7 @@ namespace Trestlebridge.Actions
                         break;
                     case 2:
                         //meat
-                        ChooseMeatProducer.CollectInput(farm);
+                        ChooseMeatProducer.CollectInput(farm, new MeatProcessor());
                         break;
                     case 3:
                         //egg

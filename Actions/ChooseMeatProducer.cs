@@ -3,83 +3,119 @@ using System.Collections.Generic;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
 using System.Linq;
+using Trestlebridge.Models.Equipment;
 
 namespace Trestlebridge.Actions
 {
     public class ChooseMeatProducer
     {
         public static List<IMeatProducing> AnimalsToDiscard { get; } = new List<IMeatProducing>();
-        public static void CollectInput(Farm farm)
+        public static void CollectInput(Farm farm, MeatProcessor meatProcessor)
         {
-            Console.Clear();
             //grazing field, chicken house
-            List<dynamic> meatFacilities = new List<dynamic>();
-
-            farm.GrazingFields.ForEach(field => meatFacilities.Add(field));
-            farm.ChickenHouses.ForEach(house => meatFacilities.Add(house));
-
-            for (var i = 0; i < meatFacilities.Count; i++)
+            bool readyToProcess = false;
+            do
             {
-                var currentFacility = meatFacilities[i];
-                var type = currentFacility.Name;
-                Console.WriteLine($"{i + 1}. {currentFacility.Name} ({currentFacility.TotalAnimals} animals)");
-            }
-
-            Console.WriteLine("Choose facility to process animals from.");
-
-            Console.Write("> ");
-
-            int facilityIndex = Int32.Parse(Console.ReadLine()) - 1;
-
-            var facilityChoosen = meatFacilities[facilityIndex];
-            Console.Clear();
-
-
-            List<IMeatProducing> availableResourcesList = new List<IMeatProducing>();
-
-            foreach (var resource in facilityChoosen.Resources)
-            {
-                if (resource is IMeatProducing)
-                {
-                    availableResourcesList.Add(resource);
+                Console.Clear();
+                if(ChooseMeatProducer.AnimalsToDiscard.Count >= 7){
+                    Console.WriteLine("You have reached the maximum number of animals that can be processed at one time");
+                    Console.WriteLine("Press any key to process the animals");
+                    Console.ReadLine();
+                    readyToProcess = true;
                 }
+                else
+                {
+                    List<dynamic> meatFacilities = new List<dynamic>();
+
+                    farm.GrazingFields.ForEach(field => meatFacilities.Add(field));
+                    farm.ChickenHouses.ForEach(house => meatFacilities.Add(house));
+
+                    Console.WriteLine($"The Meat Processor can process {meatProcessor.Capacity} animals at one time.");
+                    Console.WriteLine($"You have currently selected {ChooseMeatProducer.AnimalsToDiscard.Count} animals to process.");
+                    Console.WriteLine();
+
+                    for (var i = 0; i < meatFacilities.Count; i++)
+                    {
+                        var currentFacility = meatFacilities[i];
+                        var type = currentFacility.Name;
+                        Console.WriteLine($"{i + 1}. {currentFacility.Name} ({currentFacility.TotalAnimals} animals)");
+                    }
+                    
+                    Console.WriteLine("Choose facility to process animals from.");
+
+                    Console.Write("> ");
+
+                    int facilityIndex = Int32.Parse(Console.ReadLine()) - 1;
+
+                    var facilityChoosen = meatFacilities[facilityIndex];
+                    Console.Clear();
+
+
+                    List<IMeatProducing> availableResourcesList = new List<IMeatProducing>();
+
+
+                    //add only meat producing animals that have not already been selected to discard to availableResourcesList
+                    foreach (var resource in facilityChoosen.Resources)
+                    {
+                        if (resource is IMeatProducing && !ChooseMeatProducer.AnimalsToDiscard.Contains(resource))
+                        {
+                            availableResourcesList.Add(resource);
+                        }
+                    }
+
+                    if(availableResourcesList.Count == 0){
+                        Console.WriteLine("This facility does not have any animals that can be processed");
+                        Console.ReadLine();
+                    }
+                    else{
+                        var animalTypeChoosen = ChooseMeatProducer.ShowAnimals(availableResourcesList);
+                        readyToProcess = ChooseMeatProducer.SelectAnimalsToProcess(availableResourcesList, animalTypeChoosen);
+                    }
+                    }
             }
-
-            var animalTypeChoosen = ChooseMeatProducer.ShowAnimals(availableResourcesList);
-
-            ChooseMeatProducer.SelectAnimals(availableResourcesList, animalTypeChoosen);
-
-            Console.ReadLine();
-
+            while(!readyToProcess);
+                        
         }
         private static ResourceType ShowAnimals(List<IMeatProducing> availableResourcesList)
         {
-            Console.WriteLine("Select an animal to process:");
-
+            Console.Clear();
             List<ResourceType> animalTypeTotals = (from animal in availableResourcesList
                                                 group animal by animal.GetType().Name into animalType
                                                 select new ResourceType { Type = animalType.Key, Total = animalType.Count() }).ToList();
 
             int rNum = 1;
-            foreach (var animalType in animalTypeTotals)
-            {
-                Console.WriteLine($"{rNum}. {animalType.Total} {animalType.Type}s");
-                rNum++;
-            }
-            Console.Write(">");
-            int animalTypeIndex = Int32.Parse(Console.ReadLine()) - 1;
 
-            return animalTypeTotals[animalTypeIndex];
+            if (animalTypeTotals[0].Type == "Chicken")
+            {
+                return animalTypeTotals[0];
+            }
+            else
+            {
+                Console.WriteLine("Select an animal to process:");
+                foreach (var animalType in animalTypeTotals)
+                {
+                    Console.WriteLine($"{rNum}. {animalType.Total} {animalType.Type}s");
+                    rNum++;
+                }
+                Console.Write(">");
+                int animalTypeIndex = Int32.Parse(Console.ReadLine()) - 1;
+
+                return animalTypeTotals[animalTypeIndex];
+            }
         }
 
-        private static void SelectAnimals(List<IMeatProducing> availableResourcesList, ResourceType animalType)
+        private static bool SelectAnimalsToProcess(List<IMeatProducing> availableResourcesList, ResourceType animalType)
         {
-            Console.WriteLine($"How many {animalType.Type}s do you want to process?");
+            Console.WriteLine($"There are {animalType.Total} {animalType.Type}s. How many do you want to process?");
+            Console.Write(">");
             int numSelected = Int32.Parse(Console.ReadLine());
 
             if (numSelected > animalType.Total)
             {
-                Console.WriteLine($"There are not that many {animalType.Type}s");
+                Console.WriteLine($"There are not that many {animalType.Type}s available");
+                    Console.WriteLine("Press enter to return to list of facilities");
+                    Console.ReadLine();
+                return false;
             }
             else
             {
@@ -88,19 +124,27 @@ namespace Trestlebridge.Actions
                                     where animal.GetType().Name == animalType.Type
                                     select animal
                     ).Take(numSelected).ToList();
-                //remove them from availableResourcesList
-                availableResourcesList.RemoveAll(animal => processThese.Contains(animal));
-                //add them to AnimalsToProcess
-                ChooseMeatProducer.AnimalsToDiscard.AddRange(processThese);
-                Console.WriteLine("Ready to process? (Y/n)");
-                var processYN = Console.ReadLine();
-                if (processYN.ToLower() == "y")
-                {
-                    Console.WriteLine("yes");
+                //add them to AnimalsToDicard
+                if((ChooseMeatProducer.AnimalsToDiscard.Count + processThese.Count) > 7 ){
+                    Console.WriteLine("You have exceeded the maximum number of animals that this processor can handle");
+                    Console.WriteLine("Press enter to return to list of facilities");
+                    Console.ReadLine();
+                    return false;
                 }
                 else
                 {
-                    Console.WriteLine("no");
+                    ChooseMeatProducer.AnimalsToDiscard.AddRange(processThese);
+                    Console.WriteLine("Ready to process? (Y/n)");
+                    var processYN = Console.ReadLine();
+                    if (processYN.ToLower() == "y")
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
                 }
 
             }
