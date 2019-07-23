@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Trestlebridge.Models.Facilities
 {
-    public class NaturalField : PlantFacility
+    public class NaturalField : Facility
     {
         // 10 rows of plants 
         // 6 plants per row (when purchase you purchase enough seeds for a whole row of plants)
@@ -14,7 +14,7 @@ namespace Trestlebridge.Models.Facilities
         private int _plantsPerRow = 6;
         public override string Type {get; } = "Natural Field";
 
-        public override int TotalPlants
+        public override int Total
         {
             get
             {
@@ -22,7 +22,7 @@ namespace Trestlebridge.Models.Facilities
             }
         }
 
-        public override bool FieldFull
+        public override bool Full
         {
             get
             {
@@ -51,7 +51,7 @@ namespace Trestlebridge.Models.Facilities
             StringBuilder output = new StringBuilder();
             string shortId = $"{this.FacilityId.ToString().Substring(this.FacilityId.ToString().Length - 6)}";
 
-            output.Append($"Natural field {shortId} has {this.TotalPlants} plants ({this.Resources.Count} rows)\n");
+            output.Append($"Natural field {shortId} has {this.Total} plants ({this.Resources.Count} rows)\n");
             this.Resources.ForEach(a => output.Append($"   {_plantsPerRow} {a}\n"));
 
             return output.ToString();

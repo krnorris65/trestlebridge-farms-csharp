@@ -2,20 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Trestlebridge.Interfaces;
-using System.Linq;
 
 namespace Trestlebridge.Models.Facilities
 {
-    public class PlantFacility : IResource, IFacility
+    public class Facility : IResource, IFacility
     {
         private Guid _id = Guid.NewGuid();
-
-        private List<IResource> _plantRows = new List<IResource>();
+        private List<IResource> _resouces = new List<IResource>();
         public virtual string Type {get; }
 
         public virtual double Capacity {get;}
-        public virtual bool FieldFull {get;}
-        public virtual int TotalPlants {get;}
+
+        public virtual bool Full {get;}
 
         public Guid FacilityId
         {
@@ -24,23 +22,30 @@ namespace Trestlebridge.Models.Facilities
                 return _id;
             }
         }
+        public virtual int Total {
+            get
+            {
+                return _resouces.Count;
+            }
+        }
 
         public List<IResource> Resources
         {
             get
             {
-                return _plantRows;
+                return _resouces;
             }
         }
         public void AddResource(IResource resource)
         {
-            _plantRows.Add(resource);
+            _resouces.Add(resource);
         }
 
         public void AddResource(List<IResource> resources)
         {
-            _plantRows.AddRange(resources);
+            _resouces.AddRange(resources);
         }
+
 
     }
 }

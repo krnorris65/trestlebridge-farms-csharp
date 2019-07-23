@@ -9,14 +9,14 @@ namespace Trestlebridge.Models
 {
     public class Farm
     {
-        public List<AnimalFacility> GrazingFields { get; } = new List<AnimalFacility>();
+        public List<Facility> GrazingFields { get; } = new List<Facility>();
 
-        public List<AnimalFacility> ChickenHouses {get; } = new List<AnimalFacility>();
+        public List<Facility> ChickenHouses {get; } = new List<Facility>();
 
-        public List<AnimalFacility> DuckHouses {get;} = new List<AnimalFacility>();
+        public List<Facility> DuckHouses {get;} = new List<Facility>();
 
-        public List<PlantFacility> NaturalFields {get;} = new List<PlantFacility>();
-        public List<PlantFacility> PlowedFields {get;} = new List<PlantFacility>();
+        public List<Facility> NaturalFields {get;} = new List<Facility>();
+        public List<Facility> PlowedFields {get;} = new List<Facility>();
 
         public MeatProcessor MeatProcessor { get; set; } = new MeatProcessor();
 

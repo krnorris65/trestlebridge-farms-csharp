@@ -9,12 +9,12 @@ namespace Trestlebridge.Actions
 {
     public class ChooseFacility
     {
-        public static bool CollectInput(Farm farm, IResource resource, List<AnimalFacility> facilityList)
+        public static bool CollectInput(Farm farm, IResource resource, List<Facility> facilityList)
         {
             Console.Clear();
 
             //gets only the facilities that are not full
-            var facilityWithCapacity = facilityList.Where(facility => facility.TotalAnimals != facility.Capacity).ToList();
+            var facilityWithCapacity = facilityList.Where(facility => facility.Total != facility.Capacity).ToList();
 
             Console.WriteLine($"Available Facilities:");
             Console.WriteLine("");
@@ -22,7 +22,7 @@ namespace Trestlebridge.Actions
             for (int i = 0; i < facilityWithCapacity.Count; i++)
             {
                 var cFacility = facilityWithCapacity[i];
-                Console.WriteLine($"{i + 1}. {cFacility.Type} ({cFacility.TotalAnimals} animals)");
+                Console.WriteLine($"{i + 1}. {cFacility.Type} ({cFacility.Total} animals)");
             }
 
             Console.WriteLine();
@@ -37,9 +37,9 @@ namespace Trestlebridge.Actions
                 //index of list starts at 0, so the index will always be one less than the value the user selects
                 int choiceIndex = choice - 1;
                 //gets the facility that was selected by the user
-                AnimalFacility selectedFacility = facilityWithCapacity[choiceIndex];
+                Facility selectedFacility = facilityWithCapacity[choiceIndex];
                 //finds the facility in the facilityList on the farm instance using the FacilityId
-                AnimalFacility facilityOnFarm = facilityList.Find(field => field.FacilityId == selectedFacility.FacilityId);
+                Facility facilityOnFarm = facilityList.Find(field => field.FacilityId == selectedFacility.FacilityId);
                 //adds resource to the Facility on the farm
                 facilityOnFarm.AddResource(resource);
                 //return false so the user returns to the main menu

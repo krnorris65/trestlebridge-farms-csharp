@@ -82,12 +82,12 @@ namespace Trestlebridge.Actions
                 
                 if(animal.GetType().Name == "Chicken"){
                     var chicken = (IResource)animal;
-                    AnimalFacility chickenHouse = farm.ChickenHouses.Find(house => house.Resources.Contains(chicken));
+                    Facility chickenHouse = farm.ChickenHouses.Find(house => house.Resources.Contains(chicken));
                     chickenHouse.Resources.Remove(chicken);
                 }
                 else{
                     var grazingAnimal = (IResource)animal;
-                    AnimalFacility grazingField = farm.GrazingFields.Find(field => field.Resources.Contains(grazingAnimal));
+                    Facility grazingField = farm.GrazingFields.Find(field => field.Resources.Contains(grazingAnimal));
                     grazingField.Resources.Remove(grazingAnimal);
                 }
                     IResource processedAnimal = (IResource)animal;
