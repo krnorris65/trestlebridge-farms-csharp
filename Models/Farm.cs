@@ -9,11 +9,11 @@ namespace Trestlebridge.Models
 {
     public class Farm
     {
-        public List<GrazingField> GrazingFields { get; } = new List<GrazingField>();
+        public List<AnimalFacility> GrazingFields { get; } = new List<AnimalFacility>();
 
-        public List<ChickenHouse> ChickenHouses {get; } = new List<ChickenHouse>();
+        public List<AnimalFacility> ChickenHouses {get; } = new List<AnimalFacility>();
 
-        public List<DuckHouse> DuckHouses {get;} = new List<DuckHouse>();
+        public List<AnimalFacility> DuckHouses {get;} = new List<AnimalFacility>();
 
         public List<NaturalField> NaturalFields {get;} = new List<NaturalField>();
         public List<PlowedField> PlowedFields {get;} = new List<PlowedField>();
@@ -31,7 +31,7 @@ namespace Trestlebridge.Models
             switch (typeof(T).ToString())
             {
                 case "Cow":
-                    GrazingFields[index].AddResource((IGrazing)resource);
+                    GrazingFields[index].AddResource(resource);
                     break;
                 default:
                     break;
