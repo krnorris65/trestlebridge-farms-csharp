@@ -20,6 +20,8 @@ namespace Trestlebridge.Models
 
         public MeatProcessor MeatProcessor { get; set; } = new MeatProcessor();
 
+        public EggGatherer EggGatherer {get; set;} = new EggGatherer();
+
 
         /*
             This method must specify the correct product interface of the

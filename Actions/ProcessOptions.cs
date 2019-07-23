@@ -35,6 +35,7 @@ namespace Trestlebridge.Actions
                         break;
                     case 3:
                         //egg
+                        ChooseEquipment.CollectInput(farm, farm.ChickenHouses.Concat(farm.DuckHouses).ToList(), farm.EggGatherer);
                         break;
                     case 4:
                         //compost
