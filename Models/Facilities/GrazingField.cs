@@ -18,7 +18,13 @@ namespace Trestlebridge.Models.Facilities
                 return _capacity;
             }
         }
-
+        public override bool Full
+        {
+            get
+            {
+                return _capacity == Resources.Count;
+            }
+        }
         // public List<ResourceType> GetAnimalTypes()
         // {
         //     return (from animal in _animals

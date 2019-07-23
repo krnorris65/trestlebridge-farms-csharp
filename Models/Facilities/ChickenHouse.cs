@@ -15,6 +15,14 @@ namespace Trestlebridge.Models.Facilities
             }
         }
 
+        public override bool Full
+        {
+            get
+            {
+                return _capacity == Resources.Count;
+            }
+        }
+
         public override string ToString()
         {
             StringBuilder output = new StringBuilder();
