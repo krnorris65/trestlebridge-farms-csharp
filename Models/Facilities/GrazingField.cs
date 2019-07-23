@@ -11,7 +11,7 @@ namespace Trestlebridge.Models.Facilities
     {
         private int _capacity = 20;
         public override string Type {get; } = "Grazing Field";
-        public override string ResourceType {get; } = "animal";
+        public override string Category {get; } = "animals";
 
         public override double Capacity 
         {
@@ -27,13 +27,7 @@ namespace Trestlebridge.Models.Facilities
                 return _capacity == Resources.Count;
             }
         }
-        // public List<ResourceType> GetAnimalTypes()
-        // {
-        //     return (from animal in _animals
-        //             group animal by animal.GetType().Name into animalType
-        //             select new ResourceType { Type = animalType.Key, Total = animalType.Count() }).ToList();
 
-        // }
         public override string ToString()
         {
             StringBuilder output = new StringBuilder();

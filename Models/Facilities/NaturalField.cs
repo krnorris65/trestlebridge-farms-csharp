@@ -13,7 +13,7 @@ namespace Trestlebridge.Models.Facilities
         private int _capacityRows = 10;
         private int _plantsPerRow = 6;
         public override string Type {get; } = "Natural Field";
-        public override string ResourceType {get; } = "plant";
+        public override string Category {get; } = "plants";
 
 
         public override int Total
@@ -39,13 +39,13 @@ namespace Trestlebridge.Models.Facilities
                 return _capacityRows * _plantsPerRow;
             }
         }
-
-
-        public List<ResourceType> GetPlantTypes()
+        public override List<ResourceType> ResourceTypes
         {
-            return (from plant in Resources
-                    group plant by plant.GetType().Name into plantType
-                    select new ResourceType { Type = plantType.Key, Total = (plantType.Count() * _plantsPerRow) }).ToList();
+            get{
+                return (from plant in Resources
+                        group plant by plant.GetType().Name into plantType
+                        select new ResourceType { Type = plantType.Key, Total = (plantType.Count() * _plantsPerRow) }).ToList();
+            }
 
         }
         public override string ToString()

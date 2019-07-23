@@ -6,7 +6,7 @@ namespace Trestlebridge.Models.Facilities
     {
         private int _capacity = 12;
         public override string Type {get; } = "Duck House";
-        public override string ResourceType {get; } = "animal";
+        public override string Category {get; } = "animals";
 
         public override double Capacity 
         {
