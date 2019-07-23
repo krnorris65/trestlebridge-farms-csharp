@@ -13,8 +13,20 @@ namespace Trestlebridge.Actions
             Console.Clear();
             List<ResourceType> resourceTypeTotals = (from resource in resourceList
                                                 group resource by resource.GetType().Name into resourceType
-                                                select new ResourceType { Type = resourceType.Key, Total = resourceType.Count() }).ToList();
+                                                select new ResourceType { Type = resourceType.Key, Total = resourceType.Count()}).ToList();
 
+            // Dictionary<string, double> resourceTypes = new Dictionary<string, double>();
+            // resourceList.ForEach(res => {
+            //     IMeatProducing resource = (IMeatProducing)res;
+            //     try
+            //     {
+            //         resourceTypes.Add(resource.GetType().Name, resource.Process(equipment));
+            //     }
+            //     catch(Exception)
+            //     {
+            //         resourceTypes[resource.GetType().Name] += resource.Process(equipment);
+            //     }
+            // });
 
             int rNum = 1;
             Console.WriteLine("Select a resource to process:");
