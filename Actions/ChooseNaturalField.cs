@@ -41,9 +41,9 @@ namespace Trestlebridge.Actions
                 //gets the field that was selected by the user
                 NaturalField selectedField = fieldWithCapacity[choiceIndex];
                 //finds the field in the NaturalFields list on the farm instance using the FieldId
-                NaturalField naturalField = farm.NaturalFields.Find(field => field.FieldId == selectedField.FieldId);
-                //adds plant to the Natural Field on the farm
-                naturalField.AddResource(plant);
+                // NaturalField naturalField = farm.NaturalFields.Find(field => field.FieldId == selectedField.FieldId);
+                // //adds plant to the Natural Field on the farm
+                // naturalField.AddResource(plant);
                 Console.WriteLine("You added a plant to a natural field!");
                 Console.WriteLine("Press any key to return to main menu");
                 Console.ReadLine();

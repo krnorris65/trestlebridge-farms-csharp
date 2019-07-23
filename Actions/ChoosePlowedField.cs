@@ -35,15 +35,15 @@ namespace Trestlebridge.Actions
 
             try
             {
-                int choice = Int32.Parse(Console.ReadLine());
-                //index of list starts at 0, so the index will always be one less than the value the user selects
-                int choiceIndex = choice - 1;
-                //gets the field that was selected by the user
-                PlowedField selectedField = fieldWithCapacity[choiceIndex];
-                //finds the field in the PlowedFields list on the farm instance using the FieldId
-                PlowedField plowedField = farm.PlowedFields.Find(field => field.FieldId == selectedField.FieldId);
-                //adds plant to the Plowed Field on the farm
-                plowedField.AddResource(plant);
+                // int choice = Int32.Parse(Console.ReadLine());
+                // //index of list starts at 0, so the index will always be one less than the value the user selects
+                // int choiceIndex = choice - 1;
+                // //gets the field that was selected by the user
+                // PlowedField selectedField = fieldWithCapacity[choiceIndex];
+                // //finds the field in the PlowedFields list on the farm instance using the FieldId
+                // PlowedField plowedField = farm.PlowedFields.Find(field => field.FieldId == selectedField.FieldId);
+                // //adds plant to the Plowed Field on the farm
+                // plowedField.AddResource(plant);
                 Console.WriteLine("You added a plant to a plowed field!");
                 Console.WriteLine("Press any key to return to main menu");
                 Console.ReadLine();

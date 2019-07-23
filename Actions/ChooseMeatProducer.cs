@@ -81,16 +81,16 @@ namespace Trestlebridge.Actions
             
             ChooseMeatProducer.AnimalsToDiscard.ForEach(animal => {
                 
-                if(animal.GetType().Name == "Chicken"){
-                    var chicken = (Chicken)animal;
-                    ChickenHouse chickenHouse = farm.ChickenHouses.Find(house => house.Resources.Contains(chicken));
-                    chickenHouse.Resources.Remove(chicken);
-                }
-                else{
-                    var grazingAnimal = (IGrazing)animal;
-                    GrazingField grazingField = farm.GrazingFields.Find(field => field.Resources.Contains(grazingAnimal));
-                    grazingField.Resources.Remove(grazingAnimal);
-                }
+                // if(animal.GetType().Name == "Chicken"){
+                //     var chicken = (Chicken)animal;
+                //     ChickenHouse chickenHouse = farm.ChickenHouses.Find(house => house.Resources.Contains(chicken));
+                //     chickenHouse.Resources.Remove(chicken);
+                // }
+                // else{
+                //     var grazingAnimal = (IGrazing)animal;
+                //     GrazingField grazingField = farm.GrazingFields.Find(field => field.Resources.Contains(grazingAnimal));
+                //     grazingField.Resources.Remove(grazingAnimal);
+                // }
                     IResource processedAnimal = (IResource)animal;
                     List<IResource> meatResourceList = farm.MeatProcessor.Resources;
                     meatResourceList.Add(processedAnimal);
