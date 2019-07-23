@@ -9,6 +9,8 @@ namespace Trestlebridge.Models.Facilities
 {
     public class GrazingField : IFacility<IGrazing>
     {
+        public string Name { get; } = "Grazing Field";
+
         private int _capacity = 20;
         private Guid _id = Guid.NewGuid();
 
@@ -38,6 +40,14 @@ namespace Trestlebridge.Models.Facilities
             }
         }
 
+        public List<IGrazing> Resources
+        {
+            get
+            {
+                return _animals;
+            }
+        }
+
         public void AddResource(IGrazing animal)
         {
             // TODO: implement this...
@@ -54,8 +64,8 @@ namespace Trestlebridge.Models.Facilities
         public List<ResourceType> GetAnimalTypes()
         {
             return (from animal in _animals
-                        group animal by animal.GetType().Name into animalType
-                        select new ResourceType{ Type = animalType.Key, Total = animalType.Count() }).ToList();
+                    group animal by animal.GetType().Name into animalType
+                    select new ResourceType { Type = animalType.Key, Total = animalType.Count() }).ToList();
 
         }
 

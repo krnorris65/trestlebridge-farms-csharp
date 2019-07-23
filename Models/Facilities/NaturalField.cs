@@ -8,6 +8,8 @@ namespace Trestlebridge.Models.Facilities
 {
     public class NaturalField : IFacility<ICompostProducing>
     {
+                public string Name {get; } = "Natural Field";
+
         // 10 rows of plants 
         // 6 plants per row (when purchase you purchase enough seeds for a whole row of plants)
         private int _capacityRows = 10;

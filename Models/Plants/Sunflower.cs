@@ -14,18 +14,18 @@ namespace Trestlebridge.Models.Plants
                 return this._id.ToString().Substring(this._id.ToString().Length - 6);
             }
         }
-        private int _seedsProduced = 650;
-        private double _compostProduced = 21.6;
+        private int _seedsProducedPerPlant = 10;
+        private double _compostProducedPerPlant = 0.33;
         public string Type { get; } = "Sunflower";
 
         public double CollectCompost()
         {
-            return _compostProduced;
+            return _compostProducedPerPlant;
         }
 
         public double Harvest()
         {
-            return _seedsProduced;
+            return _seedsProducedPerPlant;
         }
 
         public override string ToString()
