@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Trestlebridge.Models;
 using Trestlebridge.Models.Equipment;
 
@@ -30,7 +31,7 @@ namespace Trestlebridge.Actions
                         break;
                     case 2:
                         //meat
-                        ChooseMeatProducer.CollectInput(farm);
+                        ChooseEquipment.CollectInput(farm, farm.GrazingFields.Concat(farm.ChickenHouses).ToList(), farm.MeatProcessor);
                         break;
                     case 3:
                         //egg

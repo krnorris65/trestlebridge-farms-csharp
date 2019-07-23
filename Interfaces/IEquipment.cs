@@ -7,7 +7,9 @@ namespace Trestlebridge.Interfaces
         string Name {get; }
         double Capacity { get; }
 
-        List<IResource> Resources { get; set; }
+        List<IResource> ResourcesProcessed { get; set; }
+
+        List<IResource> GetEquipmentResources(List<IResource> list);
 
         void ProcessResources ();
 

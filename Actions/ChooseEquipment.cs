@@ -9,23 +9,20 @@ using Trestlebridge.Models.Animals;
 
 namespace Trestlebridge.Actions
 {
-    public class ChooseMeatProducer
+    public class ChooseEquipment
     {
-        public static List<IMeatProducing> AnimalsToDiscard { get; } = new List<IMeatProducing>();
-        public static void CollectInput(Farm farm)
+        private static List<IResource> _discardList { get; } = new List<IResource>();
+        public static void CollectInput(Farm farm, List<Facility> facilityList, IEquipment equipment)
         {
             //grazing field, chicken house
             bool readyToProcess = false;
-            List<dynamic> meatFacilities = new List<dynamic>();
-            farm.GrazingFields.ForEach(field => meatFacilities.Add(field));
-            farm.ChickenHouses.ForEach(house => meatFacilities.Add(house));
 
             do
             {
                 Console.Clear();
-                if(ChooseMeatProducer.AnimalsToDiscard.Count >= 7){
-                    Console.WriteLine("You have reached the maximum number of animals that can be processed at one time");
-                    Console.WriteLine("Press any key to process the animals");
+                if(ChooseEquipment._discardList.Count >= equipment.Capacity){
+                    Console.WriteLine("You have reached the maximum number that can be processed at one time");
+                    Console.WriteLine("Press any key to process resources");
                     Console.ReadLine();
                     readyToProcess = true;
                 }
@@ -34,14 +31,14 @@ namespace Trestlebridge.Actions
 
                     Console.Clear();
 
-                    Console.WriteLine($"The Meat Processor can process {farm.MeatProcessor.Capacity} animals at one time.");
-                    Console.WriteLine($"You have currently selected {ChooseMeatProducer.AnimalsToDiscard.Count} animals to process.");
+                    Console.WriteLine($"The {equipment.Name} can process {equipment.Capacity} resources at one time.");
+                    Console.WriteLine($"You have currently selected {ChooseEquipment._discardList.Count} resources to process.");
                     Console.WriteLine();
 
-                    for (var i = 0; i < meatFacilities.Count; i++)
+                    for (var i = 0; i < facilityList.Count; i++)
                     {
-                        var currentFacility = meatFacilities[i];
-                        Console.WriteLine($"{i + 1}. {currentFacility.Type} ({currentFacility.TotalAnimals} animals)");
+                        var currentFacility = facilityList[i];
+                        Console.WriteLine($"{i + 1}. {currentFacility.Type} ({currentFacility.Total} {currentFacility.Category})");
                     }
                     
                     Console.WriteLine("Choose facility to process animals from.");
@@ -50,59 +47,42 @@ namespace Trestlebridge.Actions
 
                     int facilityIndex = Int32.Parse(Console.ReadLine()) - 1;
 
-                    var facilityChoosen = meatFacilities[facilityIndex];
+                    var facilityChoosen = facilityList[facilityIndex];
                     Console.Clear();
 
 
-                    List<IMeatProducing> availableResourcesList = new List<IMeatProducing>();
-
-
-                    //add only meat producing animals that have not already been selected to discard to availableResourcesList
-                    foreach (var resource in facilityChoosen.Resources)
-                    {
-                        if (resource is IMeatProducing && !ChooseMeatProducer.AnimalsToDiscard.Contains(resource))
-                        {
-                            availableResourcesList.Add(resource);
-                        }
-                    }
+                    //add only resources that the equipment can process and that have not already been selected to discard to availableResourcesList
+                    List<IResource> availableResourcesList = equipment.GetEquipmentResources(facilityChoosen.Resources).Where(resource => !ChooseEquipment._discardList.Contains(resource)).ToList();
 
                     if(availableResourcesList.Count == 0){
                         Console.WriteLine("This facility does not have any animals that can be processed");
                         Console.ReadLine();
                     }
                     else{
-                        var animalTypeChoosen = ChooseMeatProducer.ShowAnimals(availableResourcesList);
-                        readyToProcess = ChooseMeatProducer.SelectAnimalsToProcess(availableResourcesList, animalTypeChoosen);
+                        var animalTypeChoosen = ChooseEquipment.ShowAnimals(availableResourcesList);
+                        readyToProcess = ChooseEquipment.SelectAnimalsToProcess(availableResourcesList, animalTypeChoosen);
                     }
                     }
             }
             while(!readyToProcess);
             
-            ChooseMeatProducer.AnimalsToDiscard.ForEach(animal => {
-                
-                if(animal.GetType().Name == "Chicken"){
-                    var chicken = (IResource)animal;
-                    Facility chickenHouse = farm.ChickenHouses.Find(house => house.Resources.Contains(chicken));
-                    chickenHouse.Resources.Remove(chicken);
-                }
-                else{
-                    var grazingAnimal = (IResource)animal;
-                    Facility grazingField = farm.GrazingFields.Find(field => field.Resources.Contains(grazingAnimal));
-                    grazingField.Resources.Remove(grazingAnimal);
-                }
-                    IResource processedAnimal = (IResource)animal;
-                    List<IResource> meatResourceList = farm.MeatProcessor.Resources;
-                    meatResourceList.Add(processedAnimal);
+            ChooseEquipment._discardList.ForEach(animal => {
+
+                Facility animalFacility = facilityList.Find(facility => facility.Resources.Contains(animal));
+                animalFacility.Resources.Remove(animal);
+
+                equipment.ResourcesProcessed.Add(animal);
             });
-            farm.MeatProcessor.ProcessResources();
+            equipment.ProcessResources();
             Console.ReadLine();
         }
-        private static ResourceType ShowAnimals(List<IMeatProducing> availableResourcesList)
+        private static ResourceType ShowAnimals(List<IResource> availableResourcesList)
         {
             Console.Clear();
             List<ResourceType> animalTypeTotals = (from animal in availableResourcesList
                                                 group animal by animal.GetType().Name into animalType
                                                 select new ResourceType { Type = animalType.Key, Total = animalType.Count() }).ToList();
+
 
             int rNum = 1;
 
@@ -125,7 +105,7 @@ namespace Trestlebridge.Actions
             }
         }
 
-        private static bool SelectAnimalsToProcess(List<IMeatProducing> availableResourcesList, ResourceType animalType)
+        private static bool SelectAnimalsToProcess(List<IResource> availableResourcesList, ResourceType animalType)
         {
             Console.WriteLine($"There are {animalType.Total} {animalType.Type}s. How many do you want to process?");
             Console.Write(">");
@@ -146,7 +126,7 @@ namespace Trestlebridge.Actions
                                     select animal
                     ).Take(numSelected).ToList();
                 //add them to AnimalsToDicard
-                if((ChooseMeatProducer.AnimalsToDiscard.Count + processThese.Count) > 7 ){
+                if((ChooseEquipment._discardList.Count + processThese.Count) > 7 ){
                     Console.WriteLine("You have exceeded the maximum number of animals that this processor can handle");
                     Console.WriteLine("Press enter to return to list of facilities");
                     Console.ReadLine();
@@ -154,7 +134,7 @@ namespace Trestlebridge.Actions
                 }
                 else
                 {
-                    ChooseMeatProducer.AnimalsToDiscard.AddRange(processThese);
+                    ChooseEquipment._discardList.AddRange(processThese);
                     Console.WriteLine("Ready to process? (Y/n)");
                     var processYN = Console.ReadLine();
                     if (processYN.ToLower() == "y")

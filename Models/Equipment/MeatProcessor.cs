@@ -11,12 +11,27 @@ namespace Trestlebridge.Models.Equipment
         public string Name { get; } = "Meat Processor";
         public double Capacity { get; } = 7;
 
-        public List<IResource> Resources { get; set; } = new List<IResource>();
+        public List<IResource> ResourcesProcessed { get; set; } = new List<IResource>();
+
+        public List<IResource> GetEquipmentResources(List<IResource> facilityResources)
+        {
+            var meatResources = new List<IResource>();
+            foreach (var resource in facilityResources)
+            {
+                if (resource is IMeatProducing)
+                {
+
+                    meatResources.Add(resource);
+                }
+            }
+
+            return meatResources;
+        }
 
         public void ProcessResources()
             {
                 Dictionary<string, double> meatProduced = new Dictionary<string, double>();
-                Resources.ForEach(animal => {
+                ResourcesProcessed.ForEach(animal => {
                     IMeatProducing resource = (IMeatProducing)animal;
                     try
                     {

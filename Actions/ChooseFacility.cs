@@ -44,7 +44,7 @@ namespace Trestlebridge.Actions
                 //adds resource to the Facility on the farm
                 facilityOnFarm.AddResource(resource);
                 Console.WriteLine($"You added a {resource.Type} to a {selectedFacility.Type}!");
-                Console.WriteLine("Press any key to return to main menu");
+                Console.WriteLine("Press enter to return to main menu");
                 Console.ReadLine();
                 //return false so the user returns to the main menu
                 return false;
