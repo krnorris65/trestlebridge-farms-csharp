@@ -5,7 +5,7 @@ using Trestlebridge.Interfaces;
 
 namespace Trestlebridge.Models.Facilities
 {
-    public class Facility : IResource, IFacility
+    public class AnimalFacility : IResource, IFacility
     {
         private Guid _id = Guid.NewGuid();
 

@@ -1,7 +1,7 @@
 
 namespace Trestlebridge.Models.Facilities
 {
-    public class ChickenHouse : Facility
+    public class ChickenHouse : AnimalFacility
     {
         private int _capacity = 15;
         public override string Type {get; } = "Chicken House";

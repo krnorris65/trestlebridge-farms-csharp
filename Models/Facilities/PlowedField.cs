@@ -6,23 +6,19 @@ using System.Linq;
 
 namespace Trestlebridge.Models.Facilities
 {
-    public class PlowedField : IFacility<ISeedProducing>
+    public class PlowedField : PlantFacility
     {
-        public string Name {get; } = "Plowed Field";
+        public override string Type {get; } = "Plowed Field";
 
         // 13 rows of plants 
         // 5 plants per row (when purchase you purchase enough seeds for a whole row of plants)
         private int _capacityRows = 13;
         private int _plantsPerRow = 5;
-        private Guid _id = Guid.NewGuid();
-
-        private List<ISeedProducing> _plantRows = new List<ISeedProducing>();
-
-        public int TotalPlants
+        public override int TotalPlants
         {
             get
             {
-                return _plantRows.Count * _plantsPerRow;
+                return Resources.Count * _plantsPerRow;
             }
         }
 
@@ -30,11 +26,11 @@ namespace Trestlebridge.Models.Facilities
         {
             get
             {
-                return _plantRows.Count == _capacityRows;
+                return Resources.Count == _capacityRows;
             }
         }
 
-        public double Capacity
+        public override double Capacity
         {
             get
             {
@@ -42,26 +38,10 @@ namespace Trestlebridge.Models.Facilities
             }
         }
 
-        public Guid FieldId
-        {
-            get
-            {
-                return _id;
-            }
-        }
-        public void AddResource(ISeedProducing plantRow)
-        {
-            _plantRows.Add(plantRow);
-        }
-
-        public void AddResource(List<ISeedProducing> plantRows)
-        {
-            _plantRows.AddRange(plantRows);
-        }
 
         public List<ResourceType> GetPlantTypes()
         {
-            return (from plant in _plantRows
+            return (from plant in Resources
                     group plant by plant.GetType().Name into plantType
                     select new ResourceType { Type = plantType.Key, Total = (plantType.Count() * _plantsPerRow) }).ToList();
 
@@ -70,10 +50,10 @@ namespace Trestlebridge.Models.Facilities
         public override string ToString()
         {
             StringBuilder output = new StringBuilder();
-            string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
+            string shortId = $"{this.FacilityId.ToString().Substring(this.FacilityId.ToString().Length - 6)}";
 
-            output.Append($"Plowed field {shortId} has {this.TotalPlants} plants ({this._plantRows.Count} rows)\n");
-            this._plantRows.ForEach(a => output.Append($"   {_plantsPerRow} {a}\n"));
+            output.Append($"Plowed field {shortId} has {this.TotalPlants} plants ({this.Resources.Count} rows)\n");
+            this.Resources.ForEach(a => output.Append($"   {_plantsPerRow} {a}\n"));
 
             return output.ToString();
         }

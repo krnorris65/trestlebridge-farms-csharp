@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Trestlebridge.Models.Facilities
 {
-    public class GrazingField : Facility
+    public class GrazingField : AnimalFacility
     {
         private int _capacity = 20;
         public override string Type {get; } = "Grazing Field";
