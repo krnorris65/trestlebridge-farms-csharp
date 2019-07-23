@@ -9,6 +9,7 @@ namespace Trestlebridge.Models.Facilities
     public class PlowedField : Facility
     {
         public override string Type {get; } = "Plowed Field";
+        public override string ResourceType {get; } = "plant";
 
         // 13 rows of plants 
         // 5 plants per row (when purchase you purchase enough seeds for a whole row of plants)

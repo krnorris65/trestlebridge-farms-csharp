@@ -11,6 +11,8 @@ namespace Trestlebridge.Models.Facilities
         private List<IResource> _resouces = new List<IResource>();
         public virtual string Type {get; }
 
+        public virtual string ResourceType {get;}
+
         public virtual double Capacity {get;}
 
         public virtual bool Full {get;}

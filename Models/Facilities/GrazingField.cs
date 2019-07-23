@@ -11,6 +11,8 @@ namespace Trestlebridge.Models.Facilities
     {
         private int _capacity = 20;
         public override string Type {get; } = "Grazing Field";
+        public override string ResourceType {get; } = "animal";
+
         public override double Capacity 
         {
             get

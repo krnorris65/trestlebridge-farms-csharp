@@ -13,6 +13,8 @@ namespace Trestlebridge.Models.Facilities
         private int _capacityRows = 10;
         private int _plantsPerRow = 6;
         public override string Type {get; } = "Natural Field";
+        public override string ResourceType {get; } = "plant";
+
 
         public override int Total
         {
