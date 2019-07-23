@@ -14,6 +14,7 @@ namespace Trestlebridge.Models.Facilities
         public virtual string Type {get; }
 
         public virtual double Capacity {get;}
+        public virtual bool FieldFull {get;}
         public virtual int TotalPlants {get;}
 
         public Guid FacilityId

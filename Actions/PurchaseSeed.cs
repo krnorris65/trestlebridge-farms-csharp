@@ -3,6 +3,7 @@ using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
 using Trestlebridge.Models.Plants;
 using Trestlebridge.Models.Facilities;
+using System.Linq;
 
 namespace Trestlebridge.Actions
 {
@@ -31,7 +32,8 @@ namespace Trestlebridge.Actions
                         do
                         {
                             //either plowed or natural field
-                            stayOnMenu = ChooseNaturalOrPlowedField.CollectInput(farm, new Sunflower());
+                            var plantList = farm.PlowedFields.Concat(farm.NaturalFields).ToList();
+                            stayOnMenu = ChooseFacility.CollectInput(farm, new Sunflower(), plantList);
                         }
                         while (stayOnMenu);
                         break;
@@ -39,7 +41,7 @@ namespace Trestlebridge.Actions
                         do
                         {
                             //natural field
-                            stayOnMenu = ChooseNaturalField.CollectInput(farm, new Wildflower());
+                            stayOnMenu = ChooseFacility.CollectInput(farm, new Wildflower(), farm.NaturalFields);
                         }
                         while (stayOnMenu);
                         break;
@@ -47,7 +49,7 @@ namespace Trestlebridge.Actions
                         do
                         {
                             //plowed field
-                            stayOnMenu = ChoosePlowedField.CollectInput(farm, new Sesame());
+                            stayOnMenu = ChooseFacility.CollectInput(farm, new Sesame(), farm.PlowedFields);
                         }
                         while (stayOnMenu);
                         break;

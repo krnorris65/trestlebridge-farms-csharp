@@ -15,8 +15,8 @@ namespace Trestlebridge.Models
 
         public List<AnimalFacility> DuckHouses {get;} = new List<AnimalFacility>();
 
-        public List<NaturalField> NaturalFields {get;} = new List<NaturalField>();
-        public List<PlowedField> PlowedFields {get;} = new List<PlowedField>();
+        public List<PlantFacility> NaturalFields {get;} = new List<PlantFacility>();
+        public List<PlantFacility> PlowedFields {get;} = new List<PlantFacility>();
 
         public MeatProcessor MeatProcessor { get; set; } = new MeatProcessor();
 

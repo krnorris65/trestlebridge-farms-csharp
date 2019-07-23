@@ -22,7 +22,7 @@ namespace Trestlebridge.Models.Facilities
             }
         }
 
-        public bool FieldFull
+        public override bool FieldFull
         {
             get
             {
