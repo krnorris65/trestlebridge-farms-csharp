@@ -6,35 +6,31 @@ using System.Linq;
 
 namespace Trestlebridge.Models.Facilities
 {
-    public class NaturalField : IFacility<ICompostProducing>
+    public class NaturalField : PlantFacility
     {
-                public string Name {get; } = "Natural Field";
-
         // 10 rows of plants 
         // 6 plants per row (when purchase you purchase enough seeds for a whole row of plants)
         private int _capacityRows = 10;
         private int _plantsPerRow = 6;
-        private Guid _id = Guid.NewGuid();
+        public override string Type {get; } = "Natural Field";
 
-        private List<ICompostProducing> _plantRows = new List<ICompostProducing>();
-
-        public int TotalPlants
+        public override int TotalPlants
         {
             get
             {
-                return _plantRows.Count * _plantsPerRow;
+                return Resources.Count * _plantsPerRow;
             }
         }
 
-        public bool FieldFull
+        public override bool FieldFull
         {
             get
             {
-                return _plantRows.Count == _capacityRows;
+                return Resources.Count == _capacityRows;
             }
         }
 
-        public double Capacity
+        public override double Capacity
         {
             get
             {
@@ -42,39 +38,21 @@ namespace Trestlebridge.Models.Facilities
             }
         }
 
-        public Guid FieldId
-        {
-            get
-            {
-                return _id;
-            }
-        }
-        public void AddResource(ICompostProducing plant)
-        {
-            _plantRows.Add(plant);
-        }
-
-        public void AddResource(List<ICompostProducing> plants)
-        {
-            _plantRows.AddRange(plants);
-        }
 
         public List<ResourceType> GetPlantTypes()
         {
-            return (from plant in _plantRows
+            return (from plant in Resources
                     group plant by plant.GetType().Name into plantType
                     select new ResourceType { Type = plantType.Key, Total = (plantType.Count() * _plantsPerRow) }).ToList();
 
         }
-
-
         public override string ToString()
         {
             StringBuilder output = new StringBuilder();
-            string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
+            string shortId = $"{this.FacilityId.ToString().Substring(this.FacilityId.ToString().Length - 6)}";
 
-            output.Append($"Natural field {shortId} has {this.TotalPlants} plants ({this._plantRows.Count} rows)\n");
-            this._plantRows.ForEach(a => output.Append($"   {_plantsPerRow} {a}\n"));
+            output.Append($"Natural field {shortId} has {this.TotalPlants} plants ({this.Resources.Count} rows)\n");
+            this.Resources.ForEach(a => output.Append($"   {_plantsPerRow} {a}\n"));
 
             return output.ToString();
         }

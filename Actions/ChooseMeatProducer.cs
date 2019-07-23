@@ -41,8 +41,7 @@ namespace Trestlebridge.Actions
                     for (var i = 0; i < meatFacilities.Count; i++)
                     {
                         var currentFacility = meatFacilities[i];
-                        var type = currentFacility.Name;
-                        Console.WriteLine($"{i + 1}. {currentFacility.Name} ({currentFacility.TotalAnimals} animals)");
+                        Console.WriteLine($"{i + 1}. {currentFacility.Type} ({currentFacility.TotalAnimals} animals)");
                     }
                     
                     Console.WriteLine("Choose facility to process animals from.");
@@ -82,13 +81,13 @@ namespace Trestlebridge.Actions
             ChooseMeatProducer.AnimalsToDiscard.ForEach(animal => {
                 
                 if(animal.GetType().Name == "Chicken"){
-                    var chicken = (Chicken)animal;
-                    ChickenHouse chickenHouse = farm.ChickenHouses.Find(house => house.Resources.Contains(chicken));
+                    var chicken = (IResource)animal;
+                    AnimalFacility chickenHouse = farm.ChickenHouses.Find(house => house.Resources.Contains(chicken));
                     chickenHouse.Resources.Remove(chicken);
                 }
                 else{
-                    var grazingAnimal = (IGrazing)animal;
-                    GrazingField grazingField = farm.GrazingFields.Find(field => field.Resources.Contains(grazingAnimal));
+                    var grazingAnimal = (IResource)animal;
+                    AnimalFacility grazingField = farm.GrazingFields.Find(field => field.Resources.Contains(grazingAnimal));
                     grazingField.Resources.Remove(grazingAnimal);
                 }
                     IResource processedAnimal = (IResource)animal;
