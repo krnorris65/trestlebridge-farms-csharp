@@ -13,7 +13,7 @@ namespace Trestlebridge.Models.Equipment
 
         public List<IResource> ResourcesProcessed { get; set; } = new List<IResource>();
 
-        public List<IResource> GetEquipmentResources(List<IResource> facilityResources)
+        public List<IResource> GetFacilityResources(List<IResource> facilityResources)
         {
             var meatResources = new List<IResource>();
             foreach (var resource in facilityResources)
@@ -28,7 +28,7 @@ namespace Trestlebridge.Models.Equipment
             return meatResources;
         }
 
-        public void ProcessResources()
+        public void ProcessResults()
             {
                 Dictionary<string, double> meatProduced = new Dictionary<string, double>();
                 ResourcesProcessed.ForEach(animal => {
@@ -48,9 +48,17 @@ namespace Trestlebridge.Models.Equipment
                 }
             }
         
-        public void ProcessResources(List<IMeatProducing> animals)
+        public void ProcessResources(List<IResource> processList, List<Facility> facilityList)
         {
-            // Resources.AddRange(animals);
+            processList.ForEach(resource => {
+
+                Facility resourceFacility = facilityList.Find(facility => facility.Resources.Contains(resource));
+                resourceFacility.Resources.Remove(resource);
+
+            });
+            
+            ResourcesProcessed.AddRange(processList);
+            ProcessResults();
         }
 
     }

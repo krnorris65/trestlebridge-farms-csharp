@@ -52,103 +52,25 @@ namespace Trestlebridge.Actions
 
 
                     //add only resources that the equipment can process and that have not already been selected to discard to availableResourcesList
-                    List<IResource> availableResourcesList = equipment.GetEquipmentResources(facilityChoosen.Resources).Where(resource => !ChooseEquipment._discardList.Contains(resource)).ToList();
+                    List<IResource> availableResourcesList = equipment.GetFacilityResources(facilityChoosen.Resources).Where(resource => !ChooseEquipment._discardList.Contains(resource)).ToList();
 
                     if(availableResourcesList.Count == 0){
-                        Console.WriteLine("This facility does not have any animals that can be processed");
+                        Console.WriteLine("This facility does not have any resources that can be processed");
                         Console.ReadLine();
                     }
                     else{
-                        var animalTypeChoosen = ChooseEquipment.ShowAnimals(availableResourcesList);
-                        readyToProcess = ChooseEquipment.SelectAnimalsToProcess(availableResourcesList, animalTypeChoosen);
+                        readyToProcess = ChooseResource.CollectInput(availableResourcesList, ChooseEquipment._discardList, equipment);
                     }
                     }
             }
             while(!readyToProcess);
-            
-            ChooseEquipment._discardList.ForEach(animal => {
 
-                Facility animalFacility = facilityList.Find(facility => facility.Resources.Contains(animal));
-                animalFacility.Resources.Remove(animal);
+            equipment.ProcessResources(ChooseEquipment._discardList, facilityList);
 
-                equipment.ResourcesProcessed.Add(animal);
-            });
-            equipment.ProcessResources();
+            Console.WriteLine();
+            Console.WriteLine("Please press enter to return to main menu");
             Console.ReadLine();
         }
-        private static ResourceType ShowAnimals(List<IResource> availableResourcesList)
-        {
-            Console.Clear();
-            List<ResourceType> animalTypeTotals = (from animal in availableResourcesList
-                                                group animal by animal.GetType().Name into animalType
-                                                select new ResourceType { Type = animalType.Key, Total = animalType.Count() }).ToList();
-
-
-            int rNum = 1;
-
-            if (animalTypeTotals[0].Type == "Chicken")
-            {
-                return animalTypeTotals[0];
-            }
-            else
-            {
-                Console.WriteLine("Select an animal to process:");
-                foreach (var animalType in animalTypeTotals)
-                {
-                    Console.WriteLine($"{rNum}. {animalType.Total} {animalType.Type}s");
-                    rNum++;
-                }
-                Console.Write(">");
-                int animalTypeIndex = Int32.Parse(Console.ReadLine()) - 1;
-
-                return animalTypeTotals[animalTypeIndex];
-            }
-        }
-
-        private static bool SelectAnimalsToProcess(List<IResource> availableResourcesList, ResourceType animalType)
-        {
-            Console.WriteLine($"There are {animalType.Total} {animalType.Type}s. How many do you want to process?");
-            Console.Write(">");
-            int numSelected = Int32.Parse(Console.ReadLine());
-
-            if (numSelected > animalType.Total)
-            {
-                Console.WriteLine($"There are not that many {animalType.Type}s available");
-                    Console.WriteLine("Press enter to return to list of facilities");
-                    Console.ReadLine();
-                return false;
-            }
-            else
-            {
-                //find animals in availableResourcesList that match the type of animal that was selected and limit the number to the number of animals the user wants to process
-                var processThese = (from animal in availableResourcesList
-                                    where animal.GetType().Name == animalType.Type
-                                    select animal
-                    ).Take(numSelected).ToList();
-                //add them to AnimalsToDicard
-                if((ChooseEquipment._discardList.Count + processThese.Count) > 7 ){
-                    Console.WriteLine("You have exceeded the maximum number of animals that this processor can handle");
-                    Console.WriteLine("Press enter to return to list of facilities");
-                    Console.ReadLine();
-                    return false;
-                }
-                else
-                {
-                    ChooseEquipment._discardList.AddRange(processThese);
-                    Console.WriteLine("Ready to process? (Y/n)");
-                    var processYN = Console.ReadLine();
-                    if (processYN.ToLower() == "y")
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-
-                }
-
-            }
-        }
+        
     }
 }

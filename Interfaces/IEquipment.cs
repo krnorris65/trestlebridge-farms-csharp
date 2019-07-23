@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Trestlebridge.Models.Facilities;
 
 namespace Trestlebridge.Interfaces
 {
@@ -9,9 +10,10 @@ namespace Trestlebridge.Interfaces
 
         List<IResource> ResourcesProcessed { get; set; }
 
-        List<IResource> GetEquipmentResources(List<IResource> list);
+        List<IResource> GetFacilityResources(List<IResource> list);
 
-        void ProcessResources ();
+        void ProcessResults ();
+        void ProcessResources (List<IResource> rList, List<Facility> fList);
 
     }
 }
