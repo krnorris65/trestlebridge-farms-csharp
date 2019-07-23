@@ -23,7 +23,7 @@ namespace Trestlebridge.Actions
             {
                 var cFacility = facilityWithCapacity[i];
                 Console.WriteLine($"{i + 1}. {cFacility.Type} ({cFacility.Total} {cFacility.Category})");
-                cFacility.ResourceTypes.ForEach(r => Console.WriteLine($"        {r.Type}: {r.Total} {cFacility.Category}"));
+                cFacility.ResourceTypes.ForEach(r => Console.WriteLine($"    - {r.Type}: {r.Total} {cFacility.Category}"));
             }
 
             Console.WriteLine();
