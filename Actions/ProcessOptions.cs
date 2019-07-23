@@ -30,7 +30,7 @@ namespace Trestlebridge.Actions
                         break;
                     case 2:
                         //meat
-                        ChooseMeatProducer.CollectInput(farm, new MeatProcessor());
+                        ChooseMeatProducer.CollectInput(farm);
                         break;
                     case 3:
                         //egg

@@ -4,16 +4,22 @@ using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
 using System.Linq;
 using Trestlebridge.Models.Equipment;
+using Trestlebridge.Models.Facilities;
+using Trestlebridge.Models.Animals;
 
 namespace Trestlebridge.Actions
 {
     public class ChooseMeatProducer
     {
         public static List<IMeatProducing> AnimalsToDiscard { get; } = new List<IMeatProducing>();
-        public static void CollectInput(Farm farm, MeatProcessor meatProcessor)
+        public static void CollectInput(Farm farm)
         {
             //grazing field, chicken house
             bool readyToProcess = false;
+            List<dynamic> meatFacilities = new List<dynamic>();
+            farm.GrazingFields.ForEach(field => meatFacilities.Add(field));
+            farm.ChickenHouses.ForEach(house => meatFacilities.Add(house));
+
             do
             {
                 Console.Clear();
@@ -25,12 +31,10 @@ namespace Trestlebridge.Actions
                 }
                 else
                 {
-                    List<dynamic> meatFacilities = new List<dynamic>();
 
-                    farm.GrazingFields.ForEach(field => meatFacilities.Add(field));
-                    farm.ChickenHouses.ForEach(house => meatFacilities.Add(house));
+                    Console.Clear();
 
-                    Console.WriteLine($"The Meat Processor can process {meatProcessor.Capacity} animals at one time.");
+                    Console.WriteLine($"The Meat Processor can process {farm.MeatProcessor.Capacity} animals at one time.");
                     Console.WriteLine($"You have currently selected {ChooseMeatProducer.AnimalsToDiscard.Count} animals to process.");
                     Console.WriteLine();
 
@@ -74,7 +78,25 @@ namespace Trestlebridge.Actions
                     }
             }
             while(!readyToProcess);
-                        
+            
+            ChooseMeatProducer.AnimalsToDiscard.ForEach(animal => {
+                
+                if(animal.GetType().Name == "Chicken"){
+                    var chicken = (Chicken)animal;
+                    ChickenHouse chickenHouse = farm.ChickenHouses.Find(house => house.Resources.Contains(chicken));
+                    chickenHouse.Resources.Remove(chicken);
+                }
+                else{
+                    var grazingAnimal = (IGrazing)animal;
+                    GrazingField grazingField = farm.GrazingFields.Find(field => field.Resources.Contains(grazingAnimal));
+                    grazingField.Resources.Remove(grazingAnimal);
+                }
+                    IResource processedAnimal = (IResource)animal;
+                    List<IResource> meatResourceList = farm.MeatProcessor.Resources;
+                    meatResourceList.Add(processedAnimal);
+            });
+            farm.MeatProcessor.ProcessResources();
+            Console.ReadLine();
         }
         private static ResourceType ShowAnimals(List<IMeatProducing> availableResourcesList)
         {
