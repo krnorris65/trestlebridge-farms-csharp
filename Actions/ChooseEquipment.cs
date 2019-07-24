@@ -12,6 +12,7 @@ namespace Trestlebridge.Actions
     public class ChooseEquipment
     {
         private static List<IResource> _discardList = new List<IResource>();
+        private static List<Facility> selectedFacility = new List<Facility>();
         public static void CollectInput(List<Facility> facilityList, IEquipment equipment)
         {
 
@@ -21,6 +22,7 @@ namespace Trestlebridge.Actions
             {
                 Console.Clear();
                 var resourceCount = ChooseEquipment._discardList.Count;
+                var equipmentCapacity = equipment.Capacity;
 
                 if(equipment.Name == "Egg Gatherer")
                 {
@@ -31,7 +33,11 @@ namespace Trestlebridge.Actions
                     });
                 }
 
-                if(resourceCount >= equipment.Capacity){
+                // if(equipment.Name == "Composter"){
+                //     equipmentCapacity = equipment.
+                // }
+
+                if(resourceCount >= equipmentCapacity){
                     Console.WriteLine("You have reached the maximum number that can be processed at one time");
                     Console.WriteLine("Press enter to process resources");
                     Console.ReadLine();
@@ -41,10 +47,14 @@ namespace Trestlebridge.Actions
                 {
 
                     Console.Clear();
-                    Console.WriteLine($"The {equipment.Name} can process {equipment.Capacity} resources at one time.");
+                    Console.WriteLine($"The {equipment.Name} can process {equipmentCapacity} resources at one time.");
                     Console.WriteLine($"You have currently selected {resourceCount} resources to process.");
                     Console.WriteLine();
 
+                    //if the equipment type is composter then if the discardList has resources in it, only show facilities that contain that resource, else show all the facilities
+                    if(equipment.Name == "Composter" && resourceCount != 0){
+                        facilityList = ChooseEquipment.selectedFacility;
+                    }
                     for (var i = 0; i < facilityList.Count; i++)
                     {
                         var currentFacility = facilityList[i];
@@ -58,6 +68,10 @@ namespace Trestlebridge.Actions
                     int facilityIndex = Int32.Parse(Console.ReadLine()) - 1;
 
                     var facilityChoosen = facilityList[facilityIndex];
+
+                    if(equipment.Name == "Composter" && resourceCount == 0){
+                        ChooseEquipment.selectedFacility.Add(facilityChoosen);
+                    }
                     Console.Clear();
 
 
@@ -69,8 +83,8 @@ namespace Trestlebridge.Actions
                         Console.ReadLine();
                     }
                     else{
-                        var availableSpace = equipment.Capacity - resourceCount;
-                        readyToProcess = ChooseResource.CollectInput(availableResourcesList, ChooseEquipment._discardList, availableSpace, equipment.Name);
+                        var availableSpace = equipmentCapacity - resourceCount;
+                        readyToProcess = ChooseResource.CollectInput(availableResourcesList, ChooseEquipment._discardList, availableSpace, equipment);
                     }
                     }
             }

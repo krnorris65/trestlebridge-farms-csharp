@@ -25,6 +25,8 @@ namespace Trestlebridge.Models
         public FeatherHarvester FeatherHarvester {get;} = new FeatherHarvester();
         public SeedHarvester SeedHarvester {get;} = new SeedHarvester();
 
+        public Composter Composter {get;} = new Composter();
+
 
         /*
             This method must specify the correct product interface of the
