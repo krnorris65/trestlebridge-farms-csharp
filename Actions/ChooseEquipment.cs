@@ -33,10 +33,6 @@ namespace Trestlebridge.Actions
                     });
                 }
 
-                // if(equipment.Name == "Composter"){
-                //     equipmentCapacity = equipment.
-                // }
-
                 if(resourceCount >= equipmentCapacity){
                     Console.WriteLine("You have reached the maximum number that can be processed at one time");
                     Console.WriteLine("Press enter to process resources");
