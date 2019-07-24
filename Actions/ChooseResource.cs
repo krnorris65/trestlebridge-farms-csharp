@@ -8,7 +8,7 @@ namespace Trestlebridge.Actions
 {
     public class ChooseResource
     {
-        public static bool CollectInput(List<IResource> resourceList, List<IResource> discardList, IEquipment equipment)
+        public static bool CollectInput(List<IResource> resourceList, List<IResource> discardList, double spaceAvailable)
         {
             Console.Clear();
             List<ResourceType> resourceTypeTotals = (from resource in resourceList
@@ -47,8 +47,8 @@ namespace Trestlebridge.Actions
                                     where animal.GetType().Name == selectedResource.Type
                                     select animal
                     ).Take(numSelected).ToList();
-                //add them to AnimalsToDicard
-                if((discardList.Count + processThese.Count) > equipment.Capacity){
+                //add them to discardList
+                if(processThese.Count > spaceAvailable){
                     Console.WriteLine("You have exceeded the maximum number of resources that this processor can handle");
                     Console.WriteLine("Press enter to return to list of facilities");
                     Console.ReadLine();
