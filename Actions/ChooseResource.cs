@@ -11,6 +11,7 @@ namespace Trestlebridge.Actions
         public static bool CollectInput(List<IResource> resourceList, List<IResource> discardList, double spaceAvailable)
         {
             Console.Clear();
+
             List<ResourceType> resourceTypeTotals = (from resource in resourceList
                                                 group resource by resource.GetType().Name into resourceType
                                                 select new ResourceType { Type = resourceType.Key, Total = resourceType.Count()}).ToList();
@@ -23,7 +24,6 @@ namespace Trestlebridge.Actions
                 rNum++;
             }
             Console.Write(">");
-
 
             int resourceTypeIndex = Int32.Parse(Console.ReadLine()) - 1;
 
@@ -48,7 +48,16 @@ namespace Trestlebridge.Actions
                                     select animal
                     ).Take(numSelected).ToList();
                 //add them to discardList
-                if(processThese.Count > spaceAvailable){
+                int numToAdd = numSelected;
+
+                if(processThese[0] is IEggProducing){
+                    IEggProducing eggResource = (IEggProducing)processThese[0];
+                    int eggsPerResource = eggResource.CollectEggs();
+                    numToAdd = numSelected * eggsPerResource;
+                }
+
+
+                if(numToAdd > spaceAvailable){
                     Console.WriteLine("You have exceeded the maximum number of resources that this processor can handle");
                     Console.WriteLine("Press enter to return to list of facilities");
                     Console.ReadLine();

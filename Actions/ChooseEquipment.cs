@@ -14,7 +14,7 @@ namespace Trestlebridge.Actions
         private static List<IResource> _discardList = new List<IResource>();
         public static void CollectInput(List<Facility> facilityList, IEquipment equipment)
         {
-            //grazing field, chicken house
+
             bool readyToProcess = false;
 
             do
