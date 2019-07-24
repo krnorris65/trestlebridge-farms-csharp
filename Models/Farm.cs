@@ -23,6 +23,7 @@ namespace Trestlebridge.Models
         public EggGatherer EggGatherer {get; } = new EggGatherer();
 
         public FeatherHarvester FeatherHarvester {get;} = new FeatherHarvester();
+        public SeedHarvester SeedHarvester {get;} = new SeedHarvester();
 
 
         /*

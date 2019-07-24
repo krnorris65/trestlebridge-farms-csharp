@@ -28,6 +28,7 @@ namespace Trestlebridge.Actions
                 {
                     case 1:
                         //seeds
+                        ChooseEquipment.CollectInput(farm.NaturalFields.Concat(farm.PlowedFields).ToList(), farm.SeedHarvester);
                         break;
                     case 2:
                         //meat

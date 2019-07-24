@@ -17,10 +17,11 @@ namespace Trestlebridge.Actions
                                                 select new ResourceType { Type = resourceType.Key, Total = resourceType.Count()}).ToList();
 
             int rNum = 1;
+
             Console.WriteLine("Select a resource to process:");
             foreach (var resourceType in resourceTypeTotals)
             {
-                Console.WriteLine($"{rNum}. {resourceType.Total} {resourceType.Type}s");
+                Console.WriteLine($"{rNum}. {resourceType.Type} ({resourceType.Total} available)");
                 rNum++;
             }
             Console.Write(">");

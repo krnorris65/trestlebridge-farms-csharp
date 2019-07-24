@@ -3,26 +3,18 @@ using Trestlebridge.Interfaces;
 
 namespace Trestlebridge.Models.Plants
 {
-    public class Wildflower : IResource, ICompostProducing
+    public class Wildflower : Plant, ICompostProducing
     {
-        private Guid _id = Guid.NewGuid();
-        private string _shortId
-        {
-            get
-            {
-                return this._id.ToString().Substring(this._id.ToString().Length - 6);
-            }
-        }
-        private double _compostProducedPerPlant = 0.51;
-        public string Type { get; } = "Wildflower";
+        private double _compostProducedPerRow = 3.03;
+        public override string Type { get; } = "Wildflower";
 
         public double CollectCompost()
         {
-            return _compostProducedPerPlant;
+            return _compostProducedPerRow;
         }
 
         public override string ToString () {
-            return $"Wildflower plants {this._shortId}. Colorful!";
+            return $"Wildflower plants {this.ShortId}. Colorful!";
         }
     }
 }
