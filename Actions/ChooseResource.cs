@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
+using Trestlebridge.Models.Plants;
 
 namespace Trestlebridge.Actions
 {
@@ -12,15 +13,23 @@ namespace Trestlebridge.Actions
         {
             Console.Clear();
 
+            var plantResources = new List<string>();
+            resourceList.OfType<Plant>().ToList().ForEach(pl => plantResources.Add(pl.Type));
+
             List<ResourceType> resourceTypeTotals = (from resource in resourceList
                                                 group resource by resource.GetType().Name into resourceType
                                                 select new ResourceType { Type = resourceType.Key, Total = resourceType.Count()}).ToList();
 
             int rNum = 1;
+
             Console.WriteLine("Select a resource to process:");
             foreach (var resourceType in resourceTypeTotals)
             {
-                Console.WriteLine($"{rNum}. {resourceType.Total} {resourceType.Type}s");
+                if(plantResources.Contains(resourceType.Type)){
+                    Console.WriteLine($"{rNum}. {resourceType.Type} ({resourceType.Total} rows available)");
+                } else{
+                    Console.WriteLine($"{rNum}. {resourceType.Type} ({resourceType.Total} available)");
+                }
                 rNum++;
             }
             Console.Write(">");
@@ -28,8 +37,11 @@ namespace Trestlebridge.Actions
             int resourceTypeIndex = Int32.Parse(Console.ReadLine()) - 1;
 
             var selectedResource = resourceTypeTotals[resourceTypeIndex];
-
-            Console.WriteLine($"There are {selectedResource.Total} {selectedResource.Type}s. How many do you want to process?");
+            if(plantResources.Contains(selectedResource.Type)){
+                Console.WriteLine($"There are {selectedResource.Total} {selectedResource.Type} rows. How many do you want to process?");
+            } else{
+                Console.WriteLine($"There are {selectedResource.Total} {selectedResource.Type}s. How many do you want to process?");
+            }
             Console.Write(">");
             int numSelected = Int32.Parse(Console.ReadLine());
 
