@@ -42,6 +42,7 @@ namespace Trestlebridge.Actions
                         break;
                     case 5:
                         //feather
+                        ChooseEquipment.CollectInput(farm.ChickenHouses.Concat(farm.DuckHouses).ToList(), farm.FeatherHarvester);
                         break;
                     default:
                         break;

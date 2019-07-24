@@ -70,7 +70,7 @@ namespace Trestlebridge.Actions
                     }
                     else{
                         var availableSpace = equipment.Capacity - resourceCount;
-                        readyToProcess = ChooseResource.CollectInput(availableResourcesList, ChooseEquipment._discardList, availableSpace);
+                        readyToProcess = ChooseResource.CollectInput(availableResourcesList, ChooseEquipment._discardList, availableSpace, equipment.Name);
                     }
                     }
             }

@@ -18,9 +18,11 @@ namespace Trestlebridge.Models
         public List<Facility> NaturalFields {get;} = new List<Facility>();
         public List<Facility> PlowedFields {get;} = new List<Facility>();
 
-        public MeatProcessor MeatProcessor { get; set; } = new MeatProcessor();
+        public MeatProcessor MeatProcessor { get; } = new MeatProcessor();
 
-        public EggGatherer EggGatherer {get; set;} = new EggGatherer();
+        public EggGatherer EggGatherer {get; } = new EggGatherer();
+
+        public FeatherHarvester FeatherHarvester {get;} = new FeatherHarvester();
 
 
         /*
