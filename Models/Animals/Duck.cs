@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
+using Trestlebridge.Models.Equipment;
 
 namespace Trestlebridge.Models.Animals
 {
@@ -8,7 +9,7 @@ namespace Trestlebridge.Models.Animals
     {
 
         private Guid _id = Guid.NewGuid();
-        private double _eggsProduced = 6;
+        private int _eggsProduced = 6;
         private double _feathersProduced = 0.75;
 
         private string _shortId
@@ -28,7 +29,7 @@ namespace Trestlebridge.Models.Animals
             Console.WriteLine($"Duck {this._shortId} just ate {this.FeedPerDay}kg of feed");
         }
 
-        public double CollectEggs()
+        public int CollectEggs()
         {
             return _eggsProduced;
         }

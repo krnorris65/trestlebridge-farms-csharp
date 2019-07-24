@@ -8,13 +8,13 @@ namespace Trestlebridge.Actions
 {
     public class ChooseResource
     {
-        public static bool CollectInput(List<IResource> resourceList, List<IResource> discardList, IEquipment equipment)
+        public static bool CollectInput(List<IResource> resourceList, List<IResource> discardList, double spaceAvailable)
         {
             Console.Clear();
+
             List<ResourceType> resourceTypeTotals = (from resource in resourceList
                                                 group resource by resource.GetType().Name into resourceType
-                                                select new ResourceType { Type = resourceType.Key, Total = resourceType.Count() }).ToList();
-
+                                                select new ResourceType { Type = resourceType.Key, Total = resourceType.Count()}).ToList();
 
             int rNum = 1;
             Console.WriteLine("Select a resource to process:");
@@ -24,7 +24,6 @@ namespace Trestlebridge.Actions
                 rNum++;
             }
             Console.Write(">");
-
 
             int resourceTypeIndex = Int32.Parse(Console.ReadLine()) - 1;
 
@@ -48,8 +47,17 @@ namespace Trestlebridge.Actions
                                     where animal.GetType().Name == selectedResource.Type
                                     select animal
                     ).Take(numSelected).ToList();
-                //add them to AnimalsToDicard
-                if((discardList.Count + processThese.Count) > equipment.Capacity){
+                //add them to discardList
+                int numToAdd = numSelected;
+
+                if(processThese[0] is IEggProducing){
+                    IEggProducing eggResource = (IEggProducing)processThese[0];
+                    int eggsPerResource = eggResource.CollectEggs();
+                    numToAdd = numSelected * eggsPerResource;
+                }
+
+
+                if(numToAdd > spaceAvailable){
                     Console.WriteLine("You have exceeded the maximum number of resources that this processor can handle");
                     Console.WriteLine("Press enter to return to list of facilities");
                     Console.ReadLine();

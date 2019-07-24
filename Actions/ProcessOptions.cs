@@ -31,11 +31,11 @@ namespace Trestlebridge.Actions
                         break;
                     case 2:
                         //meat
-                        ChooseEquipment.CollectInput(farm, farm.GrazingFields.Concat(farm.ChickenHouses).ToList(), farm.MeatProcessor);
+                        ChooseEquipment.CollectInput(farm.GrazingFields.Concat(farm.ChickenHouses).ToList(), farm.MeatProcessor);
                         break;
                     case 3:
                         //egg
-                        ChooseEquipment.CollectInput(farm, farm.ChickenHouses.Concat(farm.DuckHouses).ToList(), farm.EggGatherer);
+                        ChooseEquipment.CollectInput(farm.ChickenHouses.Concat(farm.DuckHouses).Concat(farm.GrazingFields).ToList(), farm.EggGatherer);
                         break;
                     case 4:
                         //compost

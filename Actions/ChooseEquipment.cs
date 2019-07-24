@@ -11,18 +11,29 @@ namespace Trestlebridge.Actions
 {
     public class ChooseEquipment
     {
-        private static List<IResource> _discardList { get; } = new List<IResource>();
-        public static void CollectInput(Farm farm, List<Facility> facilityList, IEquipment equipment)
+        private static List<IResource> _discardList = new List<IResource>();
+        public static void CollectInput(List<Facility> facilityList, IEquipment equipment)
         {
-            //grazing field, chicken house
+
             bool readyToProcess = false;
 
             do
             {
                 Console.Clear();
-                if(ChooseEquipment._discardList.Count >= equipment.Capacity){
+                var resourceCount = ChooseEquipment._discardList.Count;
+
+                if(equipment.Name == "Egg Gatherer")
+                {
+                    resourceCount = 0;
+                    ChooseEquipment._discardList.ForEach(resource => {
+                        IEggProducing eggRes = (IEggProducing)resource;
+                        resourceCount += eggRes.CollectEggs();
+                    });
+                }
+
+                if(resourceCount >= equipment.Capacity){
                     Console.WriteLine("You have reached the maximum number that can be processed at one time");
-                    Console.WriteLine("Press any key to process resources");
+                    Console.WriteLine("Press enter to process resources");
                     Console.ReadLine();
                     readyToProcess = true;
                 }
@@ -30,9 +41,8 @@ namespace Trestlebridge.Actions
                 {
 
                     Console.Clear();
-
                     Console.WriteLine($"The {equipment.Name} can process {equipment.Capacity} resources at one time.");
-                    Console.WriteLine($"You have currently selected {ChooseEquipment._discardList.Count} resources to process.");
+                    Console.WriteLine($"You have currently selected {resourceCount} resources to process.");
                     Console.WriteLine();
 
                     for (var i = 0; i < facilityList.Count; i++)
@@ -59,13 +69,15 @@ namespace Trestlebridge.Actions
                         Console.ReadLine();
                     }
                     else{
-                        readyToProcess = ChooseResource.CollectInput(availableResourcesList, ChooseEquipment._discardList, equipment);
+                        var availableSpace = equipment.Capacity - resourceCount;
+                        readyToProcess = ChooseResource.CollectInput(availableResourcesList, ChooseEquipment._discardList, availableSpace);
                     }
                     }
             }
             while(!readyToProcess);
 
             equipment.ProcessResources(ChooseEquipment._discardList, facilityList);
+            ChooseEquipment._discardList = new List<IResource>();
 
             Console.WriteLine();
             Console.WriteLine("Please press enter to return to main menu");

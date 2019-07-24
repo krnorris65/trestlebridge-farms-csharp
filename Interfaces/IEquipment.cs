@@ -12,7 +12,7 @@ namespace Trestlebridge.Interfaces
 
         List<IResource> GetFacilityResources(List<IResource> list);
 
-        void ProcessResults ();
+        void ProcessResults (List<IResource> pList);
         void ProcessResources (List<IResource> rList, List<Facility> fList);
 
     }

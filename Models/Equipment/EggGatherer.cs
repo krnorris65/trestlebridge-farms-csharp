@@ -28,10 +28,10 @@ namespace Trestlebridge.Models.Equipment
             return eggResources;
         }
 
-        public void ProcessResults()
+        public void ProcessResults(List<IResource> resProcessed)
             {
                 Dictionary<string, double> eggsProduced = new Dictionary<string, double>();
-                ResourcesProcessed.ForEach(animal => {
+                resProcessed.ForEach(animal => {
                     IEggProducing resource = (IEggProducing)animal;
                     try
                     {
@@ -58,7 +58,7 @@ namespace Trestlebridge.Models.Equipment
             // });
             
             ResourcesProcessed.AddRange(processList);
-            ProcessResults();
+            ProcessResults(processList);
         }
 
     }

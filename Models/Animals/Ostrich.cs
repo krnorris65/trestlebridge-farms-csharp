@@ -7,7 +7,7 @@ namespace Trestlebridge.Models.Animals {
 
         private Guid _id = Guid.NewGuid();
         private double _meatProduced = 2.6;
-        private double _eggsProduced = 3;
+        private int _eggsProduced = 3;
 
         private string _shortId {
             get {
@@ -31,7 +31,7 @@ namespace Trestlebridge.Models.Animals {
             return $"Ostrich {this._shortId}. Squack!";
         }
 
-        public double CollectEggs()
+        public int CollectEggs()
         {
             return _eggsProduced;
         }
