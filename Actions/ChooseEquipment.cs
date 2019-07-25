@@ -18,12 +18,12 @@ namespace Trestlebridge.Actions
 
             bool readyToProcess = false;
             List<Facility> availableFacilities = facilityList;
+            var equipmentCapacity = equipment.Capacity;
 
             do
             {
                 Console.Clear();
                 var resourceCount = ChooseEquipment._discardList.Count;
-                var equipmentCapacity = equipment.Capacity;
 
                 if(equipment.Name == "Egg Gatherer")
                 {
@@ -44,7 +44,14 @@ namespace Trestlebridge.Actions
                 {
 
                     Console.Clear();
-                    Console.WriteLine($"The {equipment.Name} can process {equipmentCapacity} resources at one time.");
+                    if(ChooseEquipment.selectedFacility == null && equipment.Name == "Composter"){
+                        Composter compostEquipment = (Composter)equipment;
+                        Console.WriteLine($"The {equipment.Name} can process either {equipmentCapacity} plant resources or {compostEquipment.CapacityGoat} animal resources at one time.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"The {equipment.Name} can process {equipmentCapacity} resources at one time.");
+                    }
                     Console.WriteLine($"You have currently selected {resourceCount} resources to process.");
                     Console.WriteLine();
 
@@ -83,7 +90,16 @@ namespace Trestlebridge.Actions
 
                         if(equipment.Name == "Composter" && resourceCount == 0){
                             ChooseEquipment.selectedFacility = facilityChoosen;
+                            Composter compostEquipment = (Composter)equipment;
+                            if(ChooseEquipment.selectedFacility.Type == "Grazing Field")
+                            {
+                                equipmentCapacity = compostEquipment.CapacityGoat;
+                            }else
+                            {
+                                equipmentCapacity = compostEquipment.Capacity;
+                            }
                         }
+
                         Console.Clear();
 
 
@@ -105,6 +121,7 @@ namespace Trestlebridge.Actions
 
             equipment.ProcessResources(ChooseEquipment._discardList, availableFacilities);
             ChooseEquipment._discardList = new List<IResource>();
+            ChooseEquipment.selectedFacility = null;
 
             Console.WriteLine();
             Console.WriteLine("Please press enter to return to main menu");
