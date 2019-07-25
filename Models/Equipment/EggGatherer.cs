@@ -50,13 +50,6 @@ namespace Trestlebridge.Models.Equipment
         
         public void ProcessResources(List<IResource> processList, List<Facility> facilityList)
         {
-            // processList.ForEach(resource => {
-
-            //     Facility resourceFacility = facilityList.Find(facility => facility.Resources.Contains(resource));
-            //     resourceFacility.Resources.Remove(resource);
-
-            // });
-            
             ResourcesProcessed.AddRange(processList);
             ProcessResults(processList);
         }

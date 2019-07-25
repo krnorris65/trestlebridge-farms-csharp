@@ -40,6 +40,7 @@ namespace Trestlebridge.Actions
                         break;
                     case 4:
                         //compost
+                        ChooseEquipment.CollectInput(farm.NaturalFields.Concat(farm.PlowedFields).Concat(farm.GrazingFields).ToList(), farm.Composter);
                         break;
                     case 5:
                         //feather

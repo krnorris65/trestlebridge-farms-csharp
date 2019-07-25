@@ -12,10 +12,13 @@ namespace Trestlebridge.Actions
     public class ChooseEquipment
     {
         private static List<IResource> _discardList = new List<IResource>();
+        private static Facility selectedFacility;
         public static void CollectInput(List<Facility> facilityList, IEquipment equipment)
         {
 
             bool readyToProcess = false;
+            List<Facility> availableFacilities = facilityList;
+            var equipmentCapacity = equipment.Capacity;
 
             do
             {
@@ -31,7 +34,7 @@ namespace Trestlebridge.Actions
                     });
                 }
 
-                if(resourceCount >= equipment.Capacity){
+                if(resourceCount >= equipmentCapacity){
                     Console.WriteLine("You have reached the maximum number that can be processed at one time");
                     Console.WriteLine("Press enter to process resources");
                     Console.ReadLine();
@@ -41,43 +44,84 @@ namespace Trestlebridge.Actions
                 {
 
                     Console.Clear();
-                    Console.WriteLine($"The {equipment.Name} can process {equipment.Capacity} resources at one time.");
+                    if(ChooseEquipment.selectedFacility == null && equipment.Name == "Composter"){
+                        Composter compostEquipment = (Composter)equipment;
+                        Console.WriteLine($"The {equipment.Name} can process either {equipmentCapacity} plant resources or {compostEquipment.CapacityGoat} animal resources at one time.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"The {equipment.Name} can process {equipmentCapacity} resources at one time.");
+                    }
                     Console.WriteLine($"You have currently selected {resourceCount} resources to process.");
                     Console.WriteLine();
 
-                    for (var i = 0; i < facilityList.Count; i++)
+                    //if the equipment type is composter then if the discardList has resources in it, only show facilities that contain that resource, else show all the facilities
+                    if(equipment.Name == "Composter" && resourceCount != 0){
+                        if(ChooseEquipment.selectedFacility.Type == "Grazing Field")
+                        {
+                            availableFacilities = facilityList.Where(facility => facility.Type == "Grazing Field").ToList();
+                        }else
+                        {
+                            availableFacilities = facilityList.Where(facility => facility.Type != "Grazing Field").ToList();
+                        }
+                    }
+                    if(resourceCount != 0){
+                        Console.WriteLine("0. Ready to process resources");
+                    }
+                    for (var i = 0; i < availableFacilities.Count; i++)
                     {
-                        var currentFacility = facilityList[i];
+                        var currentFacility = availableFacilities[i];
                         Console.WriteLine($"{i + 1}. {currentFacility.Type} ({currentFacility.Total} {currentFacility.Category})");
                     }
                     
-                    Console.WriteLine("Choose facility to process animals from.");
+                    Console.WriteLine();
+                    Console.WriteLine("Choose facility to process resources from.");
 
                     Console.Write("> ");
 
                     int facilityIndex = Int32.Parse(Console.ReadLine()) - 1;
-
-                    var facilityChoosen = facilityList[facilityIndex];
-                    Console.Clear();
-
-
-                    //add only resources that the equipment can process and that have not already been selected to discard to availableResourcesList
-                    List<IResource> availableResourcesList = equipment.GetFacilityResources(facilityChoosen.Resources).Where(resource => !ChooseEquipment._discardList.Contains(resource)).ToList();
-
-                    if(availableResourcesList.Count == 0){
-                        Console.WriteLine("This facility does not have any resources that can be processed");
-                        Console.ReadLine();
+                    if(facilityIndex == -1){
+                        readyToProcess = true;
                     }
                     else{
-                        var availableSpace = equipment.Capacity - resourceCount;
-                        readyToProcess = ChooseResource.CollectInput(availableResourcesList, ChooseEquipment._discardList, availableSpace, equipment.Name);
+
+
+                        var facilityChoosen = availableFacilities[facilityIndex];
+
+                        if(equipment.Name == "Composter" && resourceCount == 0){
+                            ChooseEquipment.selectedFacility = facilityChoosen;
+                            Composter compostEquipment = (Composter)equipment;
+                            if(ChooseEquipment.selectedFacility.Type == "Grazing Field")
+                            {
+                                equipmentCapacity = compostEquipment.CapacityGoat;
+                            }else
+                            {
+                                equipmentCapacity = compostEquipment.Capacity;
+                            }
+                        }
+
+                        Console.Clear();
+
+
+                        //add only resources that the equipment can process and that have not already been selected to discard to availableResourcesList
+                        List<IResource> availableResourcesList = equipment.GetFacilityResources(facilityChoosen.Resources).Where(resource => !ChooseEquipment._discardList.Contains(resource)).ToList();
+
+                        if(availableResourcesList.Count == 0){
+                            Console.WriteLine("This facility does not have any resources that can be processed");
+                            Console.ReadLine();
+                        }
+                        else{
+                            var availableSpace = equipmentCapacity - resourceCount;
+                            readyToProcess = ChooseResource.CollectInput(availableResourcesList, ChooseEquipment._discardList, availableSpace, equipment);
+                        }
                     }
-                    }
+                }
             }
             while(!readyToProcess);
 
-            equipment.ProcessResources(ChooseEquipment._discardList, facilityList);
+            equipment.ProcessResources(ChooseEquipment._discardList, availableFacilities);
             ChooseEquipment._discardList = new List<IResource>();
+            ChooseEquipment.selectedFacility = null;
 
             Console.WriteLine();
             Console.WriteLine("Please press enter to return to main menu");

@@ -9,7 +9,7 @@ namespace Trestlebridge.Actions
 {
     public class ChooseResource
     {
-        public static bool CollectInput(List<IResource> resourceList, List<IResource> discardList, double spaceAvailable, string equipmentName)
+        public static bool CollectInput(List<IResource> resourceList, List<IResource> discardList, double spaceAvailable, IEquipment equipment)
         {
             Console.Clear();
 
@@ -62,7 +62,7 @@ namespace Trestlebridge.Actions
                 //add them to discardList
                 int numToAdd = numSelected;
 
-                if(equipmentName == "Egg Gatherer" && (processThese[0] is IEggProducing)){
+                if(equipment.Name == "Egg Gatherer" && (processThese[0] is IEggProducing)){
                     IEggProducing eggResource = (IEggProducing)processThese[0];
                     int eggsPerResource = eggResource.CollectEggs();
                     numToAdd = numSelected * eggsPerResource;
