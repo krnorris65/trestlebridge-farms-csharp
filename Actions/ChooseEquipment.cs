@@ -12,11 +12,12 @@ namespace Trestlebridge.Actions
     public class ChooseEquipment
     {
         private static List<IResource> _discardList = new List<IResource>();
-        private static List<Facility> selectedFacility = new List<Facility>();
+        private static Facility selectedFacility;
         public static void CollectInput(List<Facility> facilityList, IEquipment equipment)
         {
 
             bool readyToProcess = false;
+            List<Facility> availableFacilities = facilityList;
 
             do
             {
@@ -49,24 +50,30 @@ namespace Trestlebridge.Actions
 
                     //if the equipment type is composter then if the discardList has resources in it, only show facilities that contain that resource, else show all the facilities
                     if(equipment.Name == "Composter" && resourceCount != 0){
-                        facilityList = ChooseEquipment.selectedFacility;
+                        if(ChooseEquipment.selectedFacility.Type == "Grazing Field")
+                        {
+                            availableFacilities = facilityList.Where(facility => facility.Type == "Grazing Field").ToList();
+                        }else
+                        {
+                            availableFacilities = facilityList.Where(facility => facility.Type != "Grazing Field").ToList();
+                        }
                     }
-                    for (var i = 0; i < facilityList.Count; i++)
+                    for (var i = 0; i < availableFacilities.Count; i++)
                     {
-                        var currentFacility = facilityList[i];
+                        var currentFacility = availableFacilities[i];
                         Console.WriteLine($"{i + 1}. {currentFacility.Type} ({currentFacility.Total} {currentFacility.Category})");
                     }
                     
-                    Console.WriteLine("Choose facility to process animals from.");
+                    Console.WriteLine("Choose facility to process resources from.");
 
                     Console.Write("> ");
 
                     int facilityIndex = Int32.Parse(Console.ReadLine()) - 1;
 
-                    var facilityChoosen = facilityList[facilityIndex];
+                    var facilityChoosen = availableFacilities[facilityIndex];
 
                     if(equipment.Name == "Composter" && resourceCount == 0){
-                        ChooseEquipment.selectedFacility.Add(facilityChoosen);
+                        ChooseEquipment.selectedFacility = facilityChoosen;
                     }
                     Console.Clear();
 
@@ -86,7 +93,7 @@ namespace Trestlebridge.Actions
             }
             while(!readyToProcess);
 
-            equipment.ProcessResources(ChooseEquipment._discardList, facilityList);
+            equipment.ProcessResources(ChooseEquipment._discardList, availableFacilities);
             ChooseEquipment._discardList = new List<IResource>();
 
             Console.WriteLine();
