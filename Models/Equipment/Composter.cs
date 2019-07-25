@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models.Facilities;
+using Trestlebridge.Models.Plants;
 
 namespace Trestlebridge.Models.Equipment
 {
@@ -55,6 +56,13 @@ namespace Trestlebridge.Models.Equipment
 
         public void ProcessResources(List<IResource> processList, List<Facility> facilityList)
         {
+            processList.ForEach(resource => {
+
+                if(resource is Plant){
+                    Facility resourceFacility = facilityList.Find(facility => facility.Resources.Contains(resource));
+                    resourceFacility.Resources.Remove(resource);
+                }
+            });
             ResourcesProcessed.AddRange(processList);
             ProcessResults(processList);
         }
